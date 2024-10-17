@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operatorer & aritmetik</title>
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700i|Source+Sans+Pro" rel="stylesheet">
+  <style>
+    /* * {
+      border: solid;
+    } */
+
+    ::selection {
+      background-color: rgb(0, 0, 0, 0.2);
+    }
+
+    /* Animergin */
+    @keyframes orb {
+      0% {
+        left: -30%;
+      }
+
+      /* 50% {
+        left: 40%;
+        border-radius: 3px;
+      } */
+
+      100% {
+        left: 30%;
+      }
+    }
+
+    #orb {
+      position: relative;
+      width: 100px;
+      height: 10px;
+      background-color: #fff;
+      box-shadow: #fff 0 0 5px;
+      animation-name: orb;
+      transform: translateX();
+      /* left: -40%; */
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      /* border-radius: 100px; */
+    }
+
+    body {
+      background-color: #293845;
+      color: #fff;
+      height: 100vh;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      width: auto;
+      height: 100%;
+    }
+
+    h1 {
+      font-family: consolas, 'Playfair Display', serif;
+      font-size: 48px;
+      font-style: italic;
+      text-shadow: #fff 0 0 5px;
+      margin-bottom: 0px;
+    }
+
+    p {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <main>
+    <h1>while, while do & for</h1>
+    <div id="orb"></div>
+  </main>
+  <!-- *Kommentera ut för att köra individella program -->
+  <!-- <script src="index.js"></script> -->
+  <!-- <script src="guess-game.js"></script> -->
+  <!-- <script src="genomgång.js"></script> -->
+</body>
+
+</html>
