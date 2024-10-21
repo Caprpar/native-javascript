@@ -26,6 +26,30 @@
       }
     }
 
+    @keyframes gradient {
+      0% {
+        background-color: #034C3C;
+      }
+
+      25% {
+
+        background-color: #4ECDC4;
+      }
+
+      50% {
+        background-color: #FF6B6B;
+      }
+
+      75% {
+        background-color: #9BA2FF;
+
+      }
+
+      100% {
+        background-color: #C7AA74;
+      }
+    }
+
     #orb {
       position: relative;
       width: 10vw;
@@ -46,6 +70,7 @@
       background-color: #293845;
       color: #fff;
       height: 90vh;
+      animation: gradient 20s infinite ease-in alternate;
     }
 
     main {
@@ -80,7 +105,7 @@
     <div id="orb"></div>
   </main>
   <!-- *Kommentera ut för att köra individella program -->
-  <script src="portion-calc.js"></script>
+  <script src="recepie-calc.js"></script>
 </body>
 
 </html>
