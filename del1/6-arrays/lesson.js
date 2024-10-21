@@ -36,3 +36,9 @@ let removed = products.pop()
 console.log("cart after removing", removed, products)
 
 console.log(products.splice(0))
+
+// * Loops through all items in array
+let myArr = [1, 2, 3, 4]
+for (const idx of myArr) {
+  console.log(idx)
+}

@@ -30,15 +30,3 @@ for(let idx = 1; idx <= 13; idx++) {
 // console.log(a[1].startsWith("a"))
 // console.log(a.indexOf("c")===2)
 // console.log(a[3])
-
-//! objekt
-
-//* Uppgift 1
-
-//* Uppgift 2
-
-//* Uppgift 3
-
-//* Uppgift 4
-
-//* Uppgift 5
