@@ -23,3 +23,11 @@
 const lookup = function (myObj, myChar) {
   console.log(myObj[myChar]);
 };
+
+let obj = {
+  name: "pelle",
+  age: 28,
+  mail: "p@gmail.com",
+};
+
+lookup(obj, "name");
