@@ -10,6 +10,13 @@ Skapa objekt som inehåller
  */
 
 let userIngredients = [];
+
+// TODO make so the key are retrived from external file
+/* Returns url from chosen product */
+function getProductUrl(product) {
+  return `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr=${product}`;
+}
+
 /** Retrive ingredient infomation from user input
  * @param {Text} name - Name of product input from user
  * @param {Number} gram - Amount of ingredient added to cooking batch
@@ -17,7 +24,8 @@ let userIngredients = [];
  *
  * @returns {Object} An object that contains all necessary data from ingredient
  */
-function getIngr(name, gram, data) {
+function getIngredient(data, gram) {
+  // FIXME: Fix so if portionweight = 0, that means the input ingredient is invalid
   let ingredient = {};
   ingredient.name = data.ingredients[0].text;
   ingredient.weight = gram;
@@ -50,12 +58,22 @@ function getIngr(name, gram, data) {
   ingredient.nutritionData = data.totalNutrients;
   ingredient.nutritionDaily = data.totalDaily;
 
+  setNutritionByWeight(ingredient);
+  // TODO make setDailyRecomendedIntakeByWeight(ingredient) function
+
   return ingredient;
 }
 
-/* Returns url from chosen product */
-function getProductUrl(product) {
-  return `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr=${product}`;
+/**
+ * The API gives us a weight property that is the average portion amount relative to the
+ * ingredient, since I want the nutrition values to be assigned accordingly to the
+ * choosen weight. I change nutrient value.
+ */
+function setNutritionByWeight(ingredient) {
+  let product = ingredient.weight / ingredient.portionWeight;
+  for (let [key, vitamin] of Object.entries(ingredient.nutritionData)) {
+    vitamin.quantity *= product;
+  }
 }
 
 /* Go through nutritionToDisplay and return object nutritionvalue  */
@@ -81,7 +99,9 @@ form.addEventListener("submit", (event) => {
   fetch(getProductUrl(ingredient))
     .then((response) => response.json())
     .then((result) => {
-      console.log(getIngr(ingredient, weight, result));
+      let input = getIngredient(result, weight);
+      console.log(input);
+      setNutritionByWeight(input);
     });
 
   event.preventDefault();
