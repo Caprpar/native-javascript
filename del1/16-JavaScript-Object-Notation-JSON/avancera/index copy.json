@@ -1,0 +1,21 @@
+[
+  {
+    "userName": "Bob",
+    "password": "secret",
+    "isLoggedIn": true,
+    "session": 21
+  },
+  {
+    "userName": "Bob",
+    "password": "secret",
+    "isLoggedIn": true,
+    "session": 21
+  },
+  {
+    "userName": "Bob",
+    "password": "secret",
+    "isLoggedIn": true,
+    "session": 21
+  }
+
+]

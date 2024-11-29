@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>forms</title>
+  <style>
+    body {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    aside {
+      /* visibility:collapse; */
+      display: none;
+      display: flex;
+      /* height: 100vh; */
+      flex-direction: column;
+    }
+
+    #window {
+      height: 100vh;
+      width: 40em;
+      background-color: antiquewhite;
+    }
+
+    form {
+      display: none;
+      display: flex;
+      width: 15em;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <aside>
+    <!-- * Login section -->
+    <form action="">
+      <input value="Username" id="user" type="text">
+      <input value="Password" id="pass" type="password">
+      <select>
+        <option value="man">Man</option>
+        <option value="kvinna">Kvinna</option>
+        <option value="annat">Annat</option>
+      </select>
+      <div><input type="checkbox"> Jag godkänner villkoren</div>
+      <div><input type="checkbox" checked> Jag vill ha nyhetsbrev</div>
+      <input type="Submit" value="Logga in" id="login-btn">
+    </form>
+
+    <!-- * Comment section -->
+    <form action="">
+      <p>Enter your comments</p>
+      <textarea name="textarea" id="textarea">
+    </textarea>
+      <input type="Submit" value="Submit comment">
+    </form>
+
+    <form action="">
+      <input type="radio" name="nationality" value="danish" checked> danish
+      <input type="radio" name="nationality" value="swedish"> swedish
+      <input type="radio" name="nationality" value="norweigan"> norweigan
+    </form>
+  </aside>
+  <main>
+    <div id="window"></div>
+  </main>
+
+
+  <script>
+
+    const inputBTN = document.querySelector("#login-btn")
+    inputBTN.addEventListener("click", event => {
+      console.log(`Värdet har ändrats '`)
+      let data = {
+        name: document.querySelector("#user").value,
+        pass: document.querySelector("#pass").value,
+        sex: document.querySelector("select").value,
+        agreesTerms: document.querySelectorAll("input[type='checkbox']")[0].checked,
+      }
+      console.log(data)
+    })
+
+
+    // Exempel på inputs
+    document.querySelector("textarea").value = "Tjenas"
+    document.querySelector("#user").value = "Caspar"
+    document.querySelector("#pass").value = "Didriksson"
+
+    // Manipulera checkbox
+    document.querySelectorAll("input[type='checkbox']")[0].checked
+
+    // Radioknappar
+    // Logga ut den checkade radioknappen
+    const isCheckedRadio = document.querySelector("input[name='nationality']:checked").value
+    console.log(isCheckedRadio)
+
+    // logga ut rullgardins val
+    const rullGardin = document.querySelector("select").value
+    console.log(rullGardin)
+
+    // Logga ut innehåll från input
+    console.log(document.querySelector("#user").value)
+    console.log(document.querySelector("#pass").value)
+    console.log(document.querySelector("textarea").value)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="vie§wport" content="width=device-width, initial-scale=1.0">
+  <title>fetch get</title>
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700i|Source+Sans+Pro" rel="stylesheet">
+  <style>
+    * {
+      /* border: solid; */
+    }
+
+    ::selection {
+      background-color: rgb(0, 0, 0, 0.2);
+    }
+
+    /* Animergin */
+    @keyframes orb {
+      0% {
+        left: -20%;
+      }
+
+      100% {
+        left: 70%;
+      }
+    }
+
+    #orb {
+      position: relative;
+      width: 10vw;
+      height: 1vw;
+      background-color: #fff;
+      box-shadow: #fff 0 0 5px;
+      animation-name: orb;
+      transform: translateX();
+      /* left: -40%; */
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      /* border-radius: 100px; */
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #35393d;
+      color: #fff;
+      height: 100vh;
+      box-shadow: inset 0px 0px 105px -27px rgba(0, 0, 0, 0.52);
+
+    }
+
+    main {
+      display: grid;
+      /* grid-template-columns: ; */
+      grid-template-areas: " title  " "terminal ";
+      /* grid-template-columns: ; */
+      grid-template-rows: .5fr 1fr;
+      width: auto;
+      height: 100%;
+    }
+
+    h1 {
+      font-family: "consolas", 'Playfair Display', serif;
+      font-size: 4vw;
+      font-style: italic;
+      text-shadow: #fff 0 0 5px;
+      margin-bottom: 0px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    #title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-area: title;
+    }
+
+    #terminal {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      grid-area: terminal;
+      box-shadow: rgb(0, 0, 0, .8);
+
+    }
+
+    #terminal>div {
+      position: relative;
+      background-color: rgb(0, 0, 0, .8);
+      padding-left: 1em;
+      padding-top: 0.5em;
+      border-radius: 10px;
+      height: 25em;
+      width: 38em;
+      overflow: auto;
+      scrollbar-width: thin;
+      box-shadow: 0px 0px 105px -27px rgba(0, 0, 0, 0.52);
+
+    }
+
+    #terminal>div>p {
+      color: rgb(255, 255, 255, .8);
+      font-family: "consolas", 'Source Sans Pro', sans-serif;
+      font-size: .8em;
+      line-height: 1.2em;
+      margin-bottom: -0.7em;
+    }
+
+    /* ===== Scrollbar CSS ===== */
+    /* Firefox */
+    * {
+      scrollbar-width: auto;
+      scrollbar-color: rgb(255, 255, 255, .8) rgb(0, 0, 0, .1);
+      ;
+    }
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: #f0ebeb;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: #4c9a5b;
+      border-radius: 10px;
+      border: 2px none #654e4e;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div id="title">
+      <div>
+        <h1>fetch-get</h1>
+        <div id="orb"></div>
+      </div>
+    </div>
+    <div id="terminal">
+      <div id="log">
+      </div>
+    </div>
+  </main>
+  <!-- *Kommentera ut för att köra individella program -->
+  <!-- <script src="index.js"></script> -->
+  <script src="lesson.js"></script>
+</body>
+
+</html>

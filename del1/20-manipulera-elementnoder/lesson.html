@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #cfcfcf;
+      align-items: center;
+      justify-content: center;
+      height: 95vh;
+    }
+
+    div {
+      margin: 1em;
+      background-color: #999;
+      height: auto;
+      width: 50em;
+      padding: 10px;
+    }
+
+    h1 {
+      color: #f1f1f1;
+      font-size: 3.5em;
+      font-family: 'Times New Roman', Times, serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1 id="joke">Loading...</h1>
+  </div>
+  <div>
+    <img src="" alt="">
+  </div>
+
+  <script>
+    const url = "https://icanhazdadjoke.com/"
+    fetch(url, {
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        document.querySelector("#joke").textContent = result.joke
+
+      })
+  </script>
+
+</body>
+
+</html>
