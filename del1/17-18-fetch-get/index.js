@@ -1,6 +1,6 @@
 // * Fetch Uppgifter
 // * BUS städer
-/* let start = ["öre", "fri", "tupp", "ben", "bamse", "kung", "möln", "stock", "um", "å"];
+let start = ["öre", "fri", "tupp", "ben", "bamse", "kung", "möln", "stock", "um", "å"];
 let end = ["eå", "bro", "stad", "holm", "kust", "borg", "by", "ville", "town", "village", "mol"];
 let url = "https://avancera.app/cities";
 
@@ -19,7 +19,7 @@ for (let i = 0; i < 100; i++) {
   })
     .then((response) => response.json())
     .then((result) => console.log(result));
-} */
+}
 
 // * Uppgift: Alla städer
 /*

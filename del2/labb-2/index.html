@@ -28,10 +28,10 @@
     <main>
       <div id="ingredient-input">
         <form>
-          <input type="text" , placeholder="oats">
-          <input id="number">
+          <input type="text" placeholder="oats" id="ingredient" autocomplete="off">
+          <input type="number" step="10" id="weight" autocomplete="off">
           <span>(g)</span>
-          <button>+</button>
+          <button type="submit">+</button>
         </form>
       </div>
     </main>
@@ -39,21 +39,6 @@
 
 
   <script src="script.js"></script>
-  <script>
-
-
-    let instance = mobiscroll.number('#demo', {
-      theme: 'ios',
-      themeVariant: 'light',
-      layout: 'fixed',
-      step: 1,
-      min: 10,
-      max: 150,
-      width: 150
-    });
-
-
-  </script>
 </body>
 
 </html>
