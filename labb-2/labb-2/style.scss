@@ -1,0 +1,15 @@
+$white: #fff;
+$light: #f0f3fd;
+$accent: #2c2446;
+$danger: #f45d01;
+$alert: #e9c46a;
+$success: #0c7c59;
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  background-color: $light;
+}
