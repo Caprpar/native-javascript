@@ -12,4 +12,14 @@ body {
   width: 100vw;
   box-sizing: border-box;
   background-color: $light;
+  display: flex;
+  justify-content: center;
+}
+
+#page {
+  display: flex;
+  justify-content: center;
+  margin: 10em;
+  border: solid;
+  width: 95vw;
 }

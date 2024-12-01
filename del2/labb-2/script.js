@@ -25,24 +25,28 @@ function getProductUrl(product) {
  * @returns {Object} An object that contains all necessary data from ingredient
  */
 function getIngredient(data, gram) {
+  if (data.totalWeight === 0) {
+    console.log("Invalid ingredient");
+    return false;
+  }
   // FIXME: Fix so if portionweight = 0, that means the input ingredient is invalid
   let ingredient = {};
   ingredient.name = data.ingredients[0].text;
   ingredient.weight = gram;
   ingredient.portionWeight = data.totalWeight;
   ingredient.displayNutrients = {
-    Energy: false,
-    Fat: false,
-    Saturated: false,
-    Carbs: false,
+    Energy: true,
+    Fat: true,
+    Saturated: true,
+    Carbs: true,
     Fiber: false,
-    Protein: false,
+    Protein: true,
     Cholesterol: false,
     Sodium: false,
-    Calcium: false,
+    Calcium: true,
     Magnesium: false,
     Potassium: false,
-    Iron: false,
+    Iron: true,
     Zinc: false,
     Phosphorus: false,
     "Vitamin A": false,
@@ -52,27 +56,41 @@ function getIngredient(data, gram) {
     "Niacin (B3)": false,
     "Vitamin B6": false,
     "Folate equivalent (total)": false,
-    "Vitamin B12": false,
-    "Vitamin D": false,
+    "Vitamin B12": true,
+    "Vitamin D": true,
   };
   ingredient.nutritionData = data.totalNutrients;
   ingredient.nutritionDaily = data.totalDaily;
 
   setNutritionByWeight(ingredient);
-  // TODO make setDailyRecomendedIntakeByWeight(ingredient) function
+  setDRIByWeight(ingredient);
 
   return ingredient;
 }
 
 /**
- * The API gives us a weight property that is the average portion amount relative to the
- * ingredient, since I want the nutrition values to be assigned accordingly to the
- * choosen weight. I change nutrient value.
+ * @param {Object} ingredient - JSON data from API
+ * ingredient.nutritionData targets all vitamin daily per portion with
+ * keys vitamin.label, vitamin.quantity and vitamin.unit.
+ * with this funcion we mutate users ingredient input so vitamins match users chosen weight
  */
 function setNutritionByWeight(ingredient) {
-  let product = ingredient.weight / ingredient.portionWeight;
+  let userWeight = ingredient.weight / ingredient.portionWeight;
   for (let [key, vitamin] of Object.entries(ingredient.nutritionData)) {
-    vitamin.quantity *= product;
+    vitamin.quantity *= userWeight;
+  }
+}
+
+/**
+ * @param {Object} ingredient - JSON data from API
+ * ingredient.nutritionDaily targets all daily recomended intake vitamins with
+ * keys vitamin.label, vitamin.quantity and vitamin.unit.
+ * with this funcion we mutate users ingredient input so DRI match users chosen weight
+ */
+function setDRIByWeight(ingredient) {
+  const userWeight = ingredient.weight / ingredient.portionWeight;
+  for (let [key, vitamin] of Object.entries(ingredient.nutritionDaily)) {
+    vitamin.quantity *= userWeight;
   }
 }
 
@@ -101,7 +119,6 @@ form.addEventListener("submit", (event) => {
     .then((result) => {
       let input = getIngredient(result, weight);
       console.log(input);
-      setNutritionByWeight(input);
     });
 
   event.preventDefault();
