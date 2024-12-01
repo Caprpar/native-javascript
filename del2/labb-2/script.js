@@ -13,7 +13,7 @@ let userIngredients = [];
 
 // TODO make so the key are retrived from external file
 /* Returns url from chosen product */
-function getProductUrl(product) {
+function getIngredientUrl(product) {
   return `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr=${product}`;
 }
 
@@ -109,15 +109,19 @@ function getNutritiousDataFromLabels(result, nutritionToDisplay) {
   return nutritions;
 }
 
+/**  */
 let form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   const ingredient = document.querySelector("#ingredient").value;
   const weight = Number(document.querySelector("#weight").value);
 
-  fetch(getProductUrl(ingredient))
+  fetch(getIngredientUrl(ingredient))
     .then((response) => response.json())
     .then((result) => {
       let input = getIngredient(result, weight);
+      // TODO Raise input error when input is false
+      // TODO add ingr to html element
+      // TODO Append ingredient nutrition data and display ingredients stats
       console.log(input);
     });
 

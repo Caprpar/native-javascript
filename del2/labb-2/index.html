@@ -26,14 +26,49 @@
       </ul> -->
     </nav>
     <main>
-      <div id="ingredient-input">
+      <section id="ingredient-input">
         <form>
           <input type="text" placeholder="oats" id="ingredient" autocomplete="off" 1>
-          <input type="number" step="10" id="weight" autocomplete="off">
-          <span>(g)</span>
+          <input type="number" step="1" id="weight" autocomplete="off" placeholder="gram" min="0">
           <button type="submit">+</button>
         </form>
-      </div>
+      </section>
+      <section id="list-of-ingredients">
+        <ul>
+          <li class="ingredient">
+            <p>200g</p>
+            <p class="grow">Oats</p>
+            <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
+          </li>
+          <li class="ingredient">
+            <p>20g</p>
+            <p class="grow">Peanuts</p>
+            <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
+          </li>
+          <li class="ingredient">
+            <p>80g</p>
+            <p class="grow">Banana</p>
+            <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
+          </li>
+        </ul>
+      </section>
+      <section id="nutrition-info">
+        <h2>Nutrition Info</h2>
+        <ul>
+          <li>
+            Energy: 250kcal
+          </li>
+          <li>
+            Kolhydrater: 250kcal
+          </li>
+          <li>
+            Protein: 250kcal
+          </li>
+          <li>
+            Fett: 250kcal
+          </li>
+        </ul>
+      </section>
     </main>
   </div>
 
