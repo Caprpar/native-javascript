@@ -1,9 +1,26 @@
-$white: #fff;
-$light: #f0f3fd;
-$accent: #2c2446;
-$danger: #f45d01;
-$alert: #e9c46a;
-$success: #0c7c59;
+$bg-success: #d0edda;
+$success: #045b21;
+
+$bg-info: #cdecf0;
+$info: #00565f;
+
+$bg-warning: #fff2cf;
+$warning: #866310;
+
+$bg-danger: #fbd5d9;
+$danger: #760b18;
+
+$bg-primary: #c9e4fd;
+$primary: #004280;
+
+$bg-secondary: #e1e2e4;
+$secondary: #343f43;
+
+$bg-light: #fefefe;
+$light: #808081;
+
+$bg-dark: #d5d7d8;
+$dark: #0e1114;
 
 * {
   font-family: Arial, Helvetica, sans-serif;
@@ -15,7 +32,7 @@ body {
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  background-color: $light;
+  background-color: $bg-light;
   display: flex;
   justify-content: center;
 }
@@ -83,4 +100,14 @@ main {
 
 .grow {
   flex-grow: 1;
+}
+
+.warning {
+  border: solid;
+  background-color: $bg-warning;
+  color: $warning;
+}
+
+.hidden {
+  display: none;
 }

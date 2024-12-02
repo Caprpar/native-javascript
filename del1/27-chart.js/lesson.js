@@ -1,8 +1,9 @@
 const ctx = document.querySelector("#myChart");
 
 let ages = {
+  elinore: 21,
   rudolf: 25,
-  kalle: 30,
+  kalle: 10,
   philip: 4,
   tindra: 18,
   annika: 52,
@@ -10,7 +11,7 @@ let ages = {
 };
 
 new Chart(ctx, {
-  type: "bar",
+  type: "pie",
   data: {
     labels: Object.keys(ages),
     datasets: [

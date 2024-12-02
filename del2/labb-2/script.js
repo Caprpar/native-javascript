@@ -25,11 +25,6 @@ function getIngredientUrl(product) {
  * @returns {Object} An object that contains all necessary data from ingredient
  */
 function getIngredient(data, gram) {
-  if (data.totalWeight === 0) {
-    console.log("Invalid ingredient");
-    return false;
-  }
-  // FIXME: Fix so if portionweight = 0, that means the input ingredient is invalid
   let ingredient = {};
   ingredient.name = data.ingredients[0].text;
   ingredient.weight = gram;
@@ -101,6 +96,19 @@ function addElementToParent(element, innerText, parent, classList = "") {
   parent.appendChild(el);
 }
 
+function isValidInput(ingredient) {
+  return ingredient.portionWeight ? true : false;
+}
+
+function displayWarning(id, display = true) {
+  const warEl = document.querySelector(`#${id}`);
+  if (display) {
+    warEl.classList.remove("hidden");
+  } else {
+    warEl.classList.add("hidden");
+  }
+}
+
 /* Go through nutritionToDisplay and return object nutritionvalue  */
 function getNutritiousDataFromLabels(result, nutritionToDisplay) {
   let nutritions = {};
@@ -140,11 +148,17 @@ form.addEventListener("submit", (event) => {
     .then((response) => response.json())
     .then((result) => {
       let ingredient = getIngredient(result, weight);
-      addIngredientToList(ingredient);
-      // TODO Raise input error when input is false
-      // TODO add ingr to html element
+      if (isValidInput(ingredient)) {
+        userIngredients.push(ingredient);
+        addIngredientToList(ingredient);
+        displayWarning("war-invalid-ingredient", false);
+      } else {
+        displayWarning("war-invalid-ingredient", true);
+      }
+      // TODO Display warning if invalid ingredient
+
       // TODO Append ingredient nutrition data and display ingredients stats
-      console.log(ingredient);
+      console.log(userIngredients);
     });
 
   event.preventDefault();
