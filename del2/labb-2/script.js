@@ -94,6 +94,13 @@ function setDRIByWeight(ingredient) {
   }
 }
 
+function addElementToParent(element, innerText, parent, classList = "") {
+  let el = document.createElement(element);
+  el.innerText = innerText ? innerText : "";
+  el.classList = classList;
+  parent.appendChild(el);
+}
+
 /* Go through nutritionToDisplay and return object nutritionvalue  */
 function getNutritiousDataFromLabels(result, nutritionToDisplay) {
   let nutritions = {};
@@ -109,8 +116,22 @@ function getNutritiousDataFromLabels(result, nutritionToDisplay) {
   return nutritions;
 }
 
+function addIngredientToList(ingredient) {
+  const list = document.querySelector("#ingredient-list > ul");
+
+  const newIngredient = document.createElement("li");
+  newIngredient.classList = "ingredient";
+
+  addElementToParent("p", `${ingredient.weight}g`, newIngredient);
+  addElementToParent("p", `${ingredient.name}`, newIngredient, "grow");
+  addElementToParent("div", "", newIngredient, "remove");
+
+  list.appendChild(newIngredient);
+}
+
 /**  */
 let form = document.querySelector("form");
+
 form.addEventListener("submit", (event) => {
   const ingredient = document.querySelector("#ingredient").value;
   const weight = Number(document.querySelector("#weight").value);
@@ -118,11 +139,12 @@ form.addEventListener("submit", (event) => {
   fetch(getIngredientUrl(ingredient))
     .then((response) => response.json())
     .then((result) => {
-      let input = getIngredient(result, weight);
+      let ingredient = getIngredient(result, weight);
+      addIngredientToList(ingredient);
       // TODO Raise input error when input is false
       // TODO add ingr to html element
       // TODO Append ingredient nutrition data and display ingredients stats
-      console.log(input);
+      console.log(ingredient);
     });
 
   event.preventDefault();
