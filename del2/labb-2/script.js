@@ -139,7 +139,6 @@ function addIngredientToList(ingredient) {
 
 /**  */
 let form = document.querySelector("form");
-
 form.addEventListener("submit", (event) => {
   const ingredient = document.querySelector("#ingredient").value;
   const weight = Number(document.querySelector("#weight").value);
