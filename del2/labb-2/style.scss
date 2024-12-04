@@ -63,6 +63,11 @@ main {
     list-style-type: none;
   }
 
+  .ingredient:hover {
+    .remove {
+      display: block;
+    }
+  }
   .ingredient {
     display: flex;
     flex-direction: row;
@@ -82,7 +87,14 @@ main {
   border: solid;
 }
 
+.remove:hover {
+  cursor: pointer;
+  background-color: $bg-dark;
+  border-radius: 100px;
+}
+
 .remove {
+  display: none;
   background-image: url(icons/x.svg);
   background-size: contain;
   background-repeat: no-repeat;
