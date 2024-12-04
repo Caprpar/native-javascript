@@ -3194,6 +3194,7 @@ const debugData = [
       "Vitamin B12": true,
       "Vitamin D": true,
     },
+
     nutritionData: {
       ENERC_KCAL: {
         label: "Energy",
@@ -3310,6 +3311,7 @@ const debugData = [
         quantity: 0.005740000000000001,
         unit: "mg",
       },
+
       NIA: {
         label: "Niacin",
         quantity: 0.05852,
@@ -3489,6 +3491,7 @@ const debugData = [
       },
     },
   },
+
   {
     name: "cran berry",
     weight: 14,
@@ -5101,7 +5104,66 @@ const debugData = [
   },
 ];
 
-let userIngredients = [];
+/**
+ * @param {Array} list - ["egg", "wheat", "sugar"]
+ * @param {*} headers - ["ingredient", "amount"]
+ * @param {*} listId - id of the table
+ */
+function generateTable(list, headers, tableId = "") {
+  let parent = document.querySelector("#nutrient-facts");
+  let table = document.createElement("table");
+  if (tableId) table.id = tableId;
+  // set headers
+  let tr = document.createElement("tr");
+  for (const head of headers) {
+    addElementToParent("th", head, tr);
+  }
+
+  table.appendChild(tr);
+  for (const label of list) {
+    let row = [label, "0", "0"];
+    let tr = document.createElement("tr");
+    for (const item of row) {
+      addElementToParent("td", item, tr);
+    }
+    table.appendChild(tr);
+  }
+  parent.appendChild(table);
+}
+
+let lables = [
+  "Energy",
+  "Total lipid (fat)",
+  "Fatty acids, total saturated",
+  "Fatty acids, total monounsaturated",
+  "Fatty acids, total polyunsaturated",
+  "Carbohydrate, by difference",
+  "Carbohydrates (net)",
+  "Fiber, total dietary",
+  "Protein",
+  "Cholesterol",
+  "Sodium, Na",
+  "Calcium, Ca",
+  "Magnesium, Mg",
+  "Potassium, K",
+  "Iron, Fe",
+  "Zinc, Zn",
+  "Phosphorus, P",
+  "Vitamin A, RAE",
+  "Vitamin C, total ascorbic acid",
+  "Thiamin",
+  "Riboflavin",
+  "Niacin",
+  "Vitamin B-6",
+  "Folate, DFE",
+  "Folate, food",
+  "Folic acid",
+  "Vitamin B-12",
+  "Vitamin D (D2 + D3)",
+  "Water",
+];
+
+generateTable(lables, ["Type", "DRI", "(g)"], "nutrient-table");
 
 // TODO make so the key are retrived from external file
 /* Returns url from chosen product */
@@ -5184,7 +5246,7 @@ function setDRIByWeight(ingredient) {
 function addElementToParent(element, innerText, parent, classList = "") {
   let el = document.createElement(element);
   el.innerText = innerText ? innerText : "";
-  el.classList = classList;
+  if (classList) el.classList = classList;
   parent.appendChild(el);
 }
 
@@ -5230,7 +5292,35 @@ function addIngredientToList(ingredient) {
   list.appendChild(newIngredient);
 }
 
-function updateNutrientInfo(nutrientList) {}
+/**
+ * @param {Node} element - document.querySelecotr("#my-chart")
+ * @param {List} data - myObj = [{caspar: 25}, {olle: 45}, {peder: 22}]
+ */
+function drawChart(element, data) {
+  const colors = ["#999", "#000"];
+  const options = {};
+  new Chart(element, {
+    type: "bar",
+    data: {
+      labels: Object.keys(data),
+      datasets: [
+        {
+          backgroundColor: colors,
+          label: "# of votes",
+          data: Object.values(data),
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
 
 /**  */
 let form = document.querySelector("form");
