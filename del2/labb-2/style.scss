@@ -24,12 +24,13 @@ $dark: #0e1114;
 
 * {
   font-family: Arial, Helvetica, sans-serif;
+  color: $dark;
 }
 
 body {
   padding: 0;
   margin: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   box-sizing: border-box;
   background-color: $bg-light;
@@ -72,11 +73,44 @@ main {
     display: flex;
     flex-direction: row;
     padding: 0.5em 0 0.5em 0.2em;
-    border-bottom: solid 0.1em rgb(0, 0, 0, 0.2);
+    border-bottom: solid 0.1em $bg-dark;
     align-items: end;
     p {
       margin: 0;
       margin-right: 0.5em;
+    }
+  }
+}
+
+#ingredient-input {
+  form {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+table {
+  width: 100%;
+  border: solid 0.3em $bg-dark;
+  border-collapse: collapse;
+  font-size: 0.9em;
+
+  thead {
+    th {
+      padding: 0.5em 0.1em;
+      color: $dark;
+      background-color: $bg-dark;
+      text-align: start;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 0 0.1em;
+        padding-top: 0.8em;
+        padding-bottom: 0.5em;
+      }
+      border-bottom: dashed 0.2em $bg-dark;
     }
   }
 }
@@ -90,21 +124,23 @@ main {
 .remove:hover {
   cursor: pointer;
   background-color: $bg-dark;
-  border-radius: 100px;
 }
 
 .remove {
+  margin-right: 0.4em;
+  border-radius: 100px;
   display: none;
   background-image: url(icons/x.svg);
   background-size: contain;
   background-repeat: no-repeat;
   height: 1em;
   width: 1em;
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 .grow {
   flex-grow: 1;
+  width: none;
 }
 
 .warning {
@@ -115,4 +151,13 @@ main {
 
 .hidden {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .remove {
+    display: block;
+    cursor: pointer;
+    background-color: $bg-dark;
+    border-radius: 100px;
+  }
 }

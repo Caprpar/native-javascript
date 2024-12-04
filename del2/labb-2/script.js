@@ -22,21 +22,26 @@ function generateTable(list, headers, tableId = "") {
   let table = document.createElement("table");
   if (tableId) table.id = tableId;
   // set headers
+  let thead = document.createElement("thead");
   let tr = document.createElement("tr");
   for (const head of headers) {
     addElementToParent("th", head, tr);
   }
-  table.appendChild(tr);
+
+  thead.appendChild(tr);
+  table.appendChild(thead);
 
   // Set table data
+  let tbody = document.createElement("tbody");
   for (const label of list) {
     let row = [label, "0", "0"];
     let tr = document.createElement("tr");
     for (const item of row) {
       addElementToParent("td", item, tr);
     }
-    table.appendChild(tr);
+    tbody.appendChild(tr);
   }
+  table.appendChild(tbody);
   parent.appendChild(table);
 }
 
