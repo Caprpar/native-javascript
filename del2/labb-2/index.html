@@ -30,15 +30,16 @@
         <form>
           <input type="text" placeholder="oats" id="ingredient" autocomplete="off" class="grow">
           <input type="number" step="1" id="weight" autocomplete="off" placeholder="gram" min="0">
-          <button type="submit">+</button>
+          <button type="submit">Add</button>
         </form>
       </section>
       <section class="warning hidden" id="war-invalid-ingredient">
-        <p><strong>Not a valid input, check your spelling</strong></p>
+        <p><strong>Not a valid input, check your spelling and try again</strong></p>
       </section>
+      <h2>Ingredients</h2>
       <section id="ingredient-list">
         <ul>
-          <li class="ingredient">
+          <!-- <li class="ingredient">
             <p>200g</p>
             <p class="grow">Oats</p>
             <div class="remove"></div>
@@ -52,7 +53,7 @@
             <p>80g</p>
             <p class="grow">Banana</p>
             <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
-          </li>
+          </li> -->
         </ul>
       </section>
       <section id="nutrient-facts">

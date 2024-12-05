@@ -48,13 +48,24 @@ body {
 main {
   #ingredient {
     width: min(60%, 20em);
+    height: 2em;
   }
   #weight {
     width: max(18%, 5em);
   }
+  button {
+    padding: 0 1em;
+  }
 }
 
 #ingredient-list {
+  // background-color: $bg-info;
+  padding: 0.1em 1em;
+  margin: 2em 0;
+  box-shadow: 0 0 10px 10px rgb(213, 215, 216, 0.6);
+  border-radius: 1em;
+  min-height: min(5em);
+
   ul {
     padding: 0;
   }
@@ -106,7 +117,7 @@ table {
   tbody {
     tr {
       td {
-        padding: 0 0.1em;
+        padding: 0 0.5em;
         padding-top: 0.8em;
         padding-bottom: 0.5em;
       }
@@ -144,9 +155,15 @@ table {
 }
 
 .warning {
+  margin: 1em 0;
   border: solid;
   background-color: $bg-warning;
   color: $warning;
+  width: 100%;
+  text-align: center;
+  p {
+    padding: 0 0.5em;
+  }
 }
 
 .hidden {

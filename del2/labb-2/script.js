@@ -2,6 +2,7 @@
 
 // TODO make so the key are retrived from external file
 /* Returns url from chosen product */
+
 function getIngredientUrl(product) {
   return `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr=${product}`;
 }
@@ -128,32 +129,168 @@ function addIngredientToList(ingredient) {
   list.appendChild(newIngredient);
 }
 
-// FIXME Fixa så batchens värden uppdateras utifrån useringredients
 /** Get the total nutrient value from each userIngredient and return as object batch*/
 function getBatchTotalValues(userIngredients) {
-  // Declare batch with nutrition keynames from nutritionData
-  // which are the same as nutritionDaily's keys
+  // FIXME add units
   let batch = {};
-  for (const [name, data] of Object.entries(userIngredients[0].nutritionDaily)) {
-    batch[name] = { name: data.label, data: 0, dri: 0 };
-  }
-
-  for (const nutrient of Object.keys(batch)) {
-    for (const ingredient of userIngredients) {
-      batch[nutrient].data += ingredient.nutritionData[nutrient].quantity;
-      batch[nutrient].dri += ingredient.nutritionDaily[nutrient].quantity;
+  if (userIngredients.length > 0) {
+    for (const [name, data] of Object.entries(userIngredients[userIngredients.length - 1].nutritionDaily)) {
+      batch[name] = { name: data.label, data: 0, dri: 0 };
     }
-  }
 
+    for (const nutrient of Object.keys(batch)) {
+      for (const ingredient of userIngredients) {
+        try {
+          batch[nutrient].data += ingredient.nutritionData[nutrient].quantity;
+        } catch (error) {
+          // console.log(error, nutrient, "DATA");
+        }
+        try {
+          batch[nutrient].dri += ingredient.nutritionDaily[nutrient].quantity;
+        } catch (error) {
+          // console.log(error, nutrient, "DRI");
+        }
+      }
+    }
+  } else {
+    batch = {
+      ENERC_KCAL: {
+        name: "Energy",
+        data: 0,
+        dri: 0,
+      },
+      FAT: {
+        name: "Total lipid (fat)",
+        data: 0,
+        dri: 0,
+      },
+      FASAT: {
+        name: "Fatty acids, total saturated",
+        data: 0,
+        dri: 0,
+      },
+      CHOCDF: {
+        name: "Carbohydrate, by difference",
+        data: 0,
+        dri: 0,
+      },
+      FIBTG: {
+        name: "Fiber, total dietary",
+        data: 0,
+        dri: 0,
+      },
+      PROCNT: {
+        name: "Protein",
+        data: 0,
+        dri: 0,
+      },
+      CHOLE: {
+        name: "Cholesterol",
+        data: 0,
+        dri: 0,
+      },
+      NA: {
+        name: "Sodium, Na",
+        data: 0,
+        dri: 0,
+      },
+      CA: {
+        name: "Calcium, Ca",
+        data: 0,
+        dri: 0,
+      },
+      MG: {
+        name: "Magnesium, Mg",
+        data: 0,
+        dri: 0,
+      },
+      K: {
+        name: "Potassium, K",
+        data: 0,
+        dri: 0,
+      },
+      FE: {
+        name: "Iron, Fe",
+        data: 0,
+        dri: 0,
+      },
+      ZN: {
+        name: "Zinc, Zn",
+        data: 0,
+        dri: 0,
+      },
+      P: {
+        name: "Phosphorus, P",
+        data: 0,
+        dri: 0,
+      },
+      VITA_RAE: {
+        name: "Vitamin A, RAE",
+        data: 0,
+        dri: 0,
+      },
+      VITC: {
+        name: "Vitamin C, total ascorbic acid",
+        data: 0,
+        dri: 0,
+      },
+      THIA: {
+        name: "Thiamin",
+        data: 0,
+        dri: 0,
+      },
+      RIBF: {
+        name: "Riboflavin",
+        data: 0,
+        dri: 0,
+      },
+      NIA: {
+        name: "Niacin",
+        data: 0,
+        dri: 0,
+      },
+      VITB6A: {
+        name: "Vitamin B-6",
+        data: 0,
+        dri: 0,
+      },
+      FOLDFE: {
+        name: "Folate, DFE",
+        data: 0,
+        dri: 0,
+      },
+      FOLFD: {
+        name: "Folate, food",
+        data: 0,
+        dri: 0,
+      },
+      FOLAC: {
+        name: "Folic acid",
+        data: 0,
+        dri: 0,
+      },
+      VITB12: {
+        name: "Vitamin B-12",
+        data: 0,
+        dri: 0,
+      },
+      VITD: {
+        name: "Vitamin D (D2 + D3)",
+        data: 0,
+        dri: 0,
+      },
+    };
+  }
   return batch;
 }
 
 /**
- * @param {Array} list - ["egg", "wheat", "sugar"]
- * @param {Array} headers - ["ingredient", "amount"]
+ * @param {Array} batch - ["Energy", "Total lipid", "fatty acids"]
+ * @param {Array} headers - ["type", "dri", "(g)"]
  * @param {String} listId - id of the table
  */
-function generateTable(list, headers, tableId = "") {
+function generateTable(batch, headers, tableId = "") {
+  // FIXME So it generates empty table if userInput is none
   // remove table if tableId already exists, so it'll be able to update table
   if (document.querySelector(`#${tableId}`)) {
     document.querySelector(`#${tableId}`).remove();
@@ -174,9 +311,15 @@ function generateTable(list, headers, tableId = "") {
 
   // Set table data
   let tbody = document.createElement("tbody");
-  for (const label of list) {
-    let row = [label, "0", "0"];
+  for (const [key, item] of Object.entries(batch)) {
+    // Formats dailyRecommendedIntake and nutrientData so it only has 1 decimal
+    item.dri = item.dri ? item.dri.toFixed(1) : 0;
+    item.data = item.data ? item.data.toFixed(1) : 0;
+
+    // add items to current table row
+    let row = [item.name, item.dri, item.data];
     let tr = document.createElement("tr");
+
     for (const item of row) {
       addElementToParent("td", item, tr);
     }
@@ -220,39 +363,9 @@ function drawChart(element, data) {
 
 let userIngredients = [];
 let remove = document.querySelectorAll(".remove");
+const tableHeader = ["Type", "DRI", "Unit"];
 
-let lables = [
-  "Energy",
-  "Total lipid (fat)",
-  "Fatty acids, total saturated",
-  "Fatty acids, total monounsaturated",
-  "Fatty acids, total polyunsaturated",
-  "Carbohydrate, by difference",
-  "Carbohydrates (net)",
-  "Fiber, total dietary",
-  "Protein",
-  "Cholesterol",
-  "Sodium, Na",
-  "Calcium, Ca",
-  "Magnesium, Mg",
-  "Potassium, K",
-  "Iron, Fe",
-  "Zinc, Zn",
-  "Phosphorus, P",
-  "Vitamin A, RAE",
-  "Vitamin C, total ascorbic acid",
-  "Thiamin",
-  "Riboflavin",
-  "Niacin",
-  "Vitamin B-6",
-  "Folate, DFE",
-  "Folate, food",
-  "Folic acid",
-  "Vitamin B-12",
-  "Vitamin D (D2 + D3)",
-  "Water",
-];
-generateTable(lables, ["Type", "DRI", "(g)"], "nutrient-table");
+generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
 
 document.addEventListener("mouseover", (event) => {
   remove = document.querySelectorAll(".remove");
@@ -271,6 +384,7 @@ document.addEventListener("mouseover", (event) => {
       }
       console.log(userIngredients);
       event.target.parentElement.remove();
+      generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
     })
   );
 });
@@ -289,8 +403,9 @@ form.addEventListener("submit", (event) => {
       // Check if input is a valid ingredient
       if (isValidInput(ingredient)) {
         userIngredients.push(ingredient);
-        generateTable(userIngredients, ["Type", "DRI", "(g)"], "nutrient-table");
-        // TODO Append ingredient nutrition data and display ingredients stats
+
+        generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
+
         console.log(getBatchTotalValues(userIngredients));
         addIngredientToList(ingredient);
         displayWarning("war-invalid-ingredient", false);
