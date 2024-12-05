@@ -129,6 +129,7 @@ function addIngredientToList(ingredient) {
 }
 
 // FIXME Fixa så batchens värden uppdateras utifrån useringredients
+/** Get the total nutrient value from each userIngredient and return as object batch*/
 function getBatchTotalValues(userIngredients) {
   // Declare batch with nutrition keynames from nutritionData
   // which are the same as nutritionDaily's keys
