@@ -1,50 +1,5 @@
 // let url = `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr="oats"`;
 
-/*
-Skapa objekt som inehåller
-- Produktnamn
-- användarens graminput
-- portionservering i gram
-- objekt på näring som ska visas
-- objekt på produktens näringsvärden
- */
-
-let userIngredients = [];
-let remove = document.querySelectorAll(".remove");
-
-/**
- * @param {Array} list - ["egg", "wheat", "sugar"]
- * @param {Array} headers - ["ingredient", "amount"]
- * @param {String} listId - id of the table
- */
-function generateTable(list, headers, tableId = "") {
-  let parent = document.querySelector("#nutrient-facts");
-  let table = document.createElement("table");
-  if (tableId) table.id = tableId;
-  // set headers
-  let thead = document.createElement("thead");
-  let tr = document.createElement("tr");
-  for (const head of headers) {
-    addElementToParent("th", head, tr);
-  }
-
-  thead.appendChild(tr);
-  table.appendChild(thead);
-
-  // Set table data
-  let tbody = document.createElement("tbody");
-  for (const label of list) {
-    let row = [label, "0", "0"];
-    let tr = document.createElement("tr");
-    for (const item of row) {
-      addElementToParent("td", item, tr);
-    }
-    tbody.appendChild(tr);
-  }
-  table.appendChild(tbody);
-  parent.appendChild(table);
-}
-
 // TODO make so the key are retrived from external file
 /* Returns url from chosen product */
 function getIngredientUrl(product) {
@@ -123,6 +78,7 @@ function setDRIByWeight(ingredient) {
   }
 }
 
+/**  */
 function addElementToParent(element, innerText, parent, classList = "") {
   let el = document.createElement(element);
   el.innerText = innerText ? innerText : "";
@@ -172,6 +128,63 @@ function addIngredientToList(ingredient) {
   list.appendChild(newIngredient);
 }
 
+// FIXME Fixa så batchens värden uppdateras utifrån useringredients
+function getBatchTotalValues(userIngredients) {
+  // Declare batch with nutrition keynames from nutritionData
+  // which are the same as nutritionDaily's keys
+  let batch = {};
+  for (const [name, data] of Object.entries(userIngredients[0].nutritionDaily)) {
+    batch[name] = { name: data.label, data: 0, dri: 0 };
+  }
+
+  for (const nutrient of Object.keys(batch)) {
+    for (const ingredient of userIngredients) {
+      batch[nutrient].data += ingredient.nutritionData[nutrient].quantity;
+      batch[nutrient].dri += ingredient.nutritionDaily[nutrient].quantity;
+    }
+  }
+
+  return batch;
+}
+
+/**
+ * @param {Array} list - ["egg", "wheat", "sugar"]
+ * @param {Array} headers - ["ingredient", "amount"]
+ * @param {String} listId - id of the table
+ */
+function generateTable(list, headers, tableId = "") {
+  // remove table if tableId already exists, so it'll be able to update table
+  if (document.querySelector(`#${tableId}`)) {
+    document.querySelector(`#${tableId}`).remove();
+  }
+  let parent = document.querySelector("#nutrient-facts");
+  let table = document.createElement("table");
+  if (tableId) table.id = tableId;
+
+  // set headers
+  let thead = document.createElement("thead");
+  let tr = document.createElement("tr");
+  for (const head of headers) {
+    addElementToParent("th", head, tr);
+  }
+
+  thead.appendChild(tr);
+  table.appendChild(thead);
+
+  // Set table data
+  let tbody = document.createElement("tbody");
+  for (const label of list) {
+    let row = [label, "0", "0"];
+    let tr = document.createElement("tr");
+    for (const item of row) {
+      addElementToParent("td", item, tr);
+    }
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  parent.appendChild(table);
+}
+
 /**
  * @param {Node} element - document.querySelecotr("#my-chart")
  * @param {List} data - myObj = [{caspar: 25}, {olle: 45}, {peder: 22}]
@@ -201,8 +214,12 @@ function drawChart(element, data) {
     },
   });
 }
-
+// * Main ----- ----- ----- ----- -----
 // * Prepare DOM Layout ----- ----- ----- ----- -----
+
+let userIngredients = [];
+let remove = document.querySelectorAll(".remove");
+
 let lables = [
   "Energy",
   "Total lipid (fat)",
@@ -267,16 +284,19 @@ form.addEventListener("submit", (event) => {
     .then((response) => response.json())
     .then((result) => {
       let ingredient = getIngredient(result, weight);
+
+      // Check if input is a valid ingredient
       if (isValidInput(ingredient)) {
         userIngredients.push(ingredient);
+        generateTable(userIngredients, ["Type", "DRI", "(g)"], "nutrient-table");
+        // TODO Append ingredient nutrition data and display ingredients stats
+        console.log(getBatchTotalValues(userIngredients));
         addIngredientToList(ingredient);
         displayWarning("war-invalid-ingredient", false);
       } else {
         displayWarning("war-invalid-ingredient", true);
       }
-      // TODO Display warning if invalid ingredient
 
-      // TODO Append ingredient nutrition data and display ingredients stats
       console.log(userIngredients);
     });
 
