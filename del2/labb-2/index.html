@@ -26,17 +26,31 @@
       </ul> -->
     </nav>
     <main>
+      <section id="saved-recipes">
+        <h1>Saved recipes</h1>
+        <ul>
+          <a href="">
+            <li>Morning oat</li>
+          </a>
+          <a href="">
+            <li>Bullet proof</li>
+          </a>
+          <a href="">
+            <li>Garam masalaaaaaa</li>
+          </a>
+        </ul>
+      </section>
       <section id="ingredient-input">
         <form>
-          <input type="text" placeholder="oats" id="ingredient" autocomplete="off" class="grow">
-          <input type="number" step="1" id="weight" autocomplete="off" placeholder="gram" min="0">
+          <input type="text" placeholder="oats" id="ingredient-input" autocomplete="off" class="grow">
+          <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight-input">
           <button type="submit">Add</button>
         </form>
       </section>
       <section class="warning hidden" id="war-invalid-ingredient">
         <p><strong>Not a valid input, check your spelling and try again</strong></p>
       </section>
-      <h2>Ingredients</h2>
+      <h2>Recipe</h2>
       <section id="ingredient-list">
         <ul>
           <!-- <li class="ingredient">

@@ -19,31 +19,6 @@ function getIngredient(data, gram) {
   ingredient.name = data.ingredients[0].text;
   ingredient.weight = gram;
   ingredient.portionWeight = data.totalWeight;
-  ingredient.displayNutrients = {
-    Energy: true,
-    Fat: true,
-    Saturated: true,
-    Carbs: true,
-    Fiber: false,
-    Protein: true,
-    Cholesterol: false,
-    Sodium: false,
-    Calcium: true,
-    Magnesium: false,
-    Potassium: false,
-    Iron: true,
-    Zinc: false,
-    Phosphorus: false,
-    "Vitamin A": false,
-    "Vitamin C": false,
-    "Thiamin (B1)": false,
-    "Riboflavin (B2)": false,
-    "Niacin (B3)": false,
-    "Vitamin B6": false,
-    "Folate equivalent (total)": false,
-    "Vitamin B12": true,
-    "Vitamin D": true,
-  };
   ingredient.nutritionData = data.totalNutrients;
   ingredient.nutritionDaily = data.totalDaily;
 
@@ -361,11 +336,11 @@ function drawChart(element, data) {
 // * Main ----- ----- ----- ----- -----
 // * Prepare DOM Layout ----- ----- ----- ----- -----
 
-let userIngredients = [];
+let recipe = [];
 let remove = document.querySelectorAll(".remove");
 const tableHeader = ["Type", "DRI", "Unit"];
 
-generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
+generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
 document.addEventListener("mouseover", (event) => {
   remove = document.querySelectorAll(".remove");
@@ -378,13 +353,13 @@ document.addEventListener("mouseover", (event) => {
       let ingredientWeight = element.parentElement.childNodes[0].innerText;
       let ingredientName = element.parentElement.childNodes[1].innerText;
 
-      for (const [index, ingredient] of userIngredients.entries()) {
+      for (const [index, ingredient] of recipe.entries()) {
         if (ingredient.name === ingredientName && ingredientWeight.includes(String(ingredient.weight)))
-          userIngredients.splice(index, 1);
+          recipe.splice(index, 1);
       }
-      console.log(userIngredients);
+      console.log(recipe);
       event.target.parentElement.remove();
-      generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
+      generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
     })
   );
 });
@@ -402,18 +377,18 @@ form.addEventListener("submit", (event) => {
 
       // Check if input is a valid ingredient
       if (isValidInput(ingredient)) {
-        userIngredients.push(ingredient);
+        recipe.push(ingredient);
 
-        generateTable(getBatchTotalValues(userIngredients), tableHeader, "nutrient-table");
+        generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
-        console.log(getBatchTotalValues(userIngredients));
+        console.log(getBatchTotalValues(recipe));
         addIngredientToList(ingredient);
         displayWarning("war-invalid-ingredient", false);
       } else {
         displayWarning("war-invalid-ingredient", true);
       }
 
-      console.log(userIngredients);
+      console.log(recipe);
     });
 
   event.preventDefault();
