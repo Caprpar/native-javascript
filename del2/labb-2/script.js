@@ -55,10 +55,11 @@ function setDRIByWeight(ingredient) {
 }
 
 /**  */
-function addElementToParent(element, innerText, parent, classList = "") {
+function addElementToParent(element, innerText, parent, classList = "", id = "") {
   let el = document.createElement(element);
   el.innerText = innerText ? innerText : "";
   if (classList) el.classList = classList;
+  if (id) el.id = id;
   parent.appendChild(el);
 }
 
@@ -76,19 +77,18 @@ function displayWarning(id, display = true) {
   }
 }
 
-/* Go through nutritionToDisplay and return object nutritionvalue  */
-function getNutritiousDataFromLabels(result, nutritionToDisplay) {
-  let nutritions = {};
-  for (const [nutrition, showNutrition] of Object.entries(nutritionToDisplay)) {
-    if (showNutrition) {
-      for (const [nutritionCode, data] of Object.entries(result)) {
-        if (nutrition === data.label) {
-          nutritions[nutrition] = data.quantity;
-        }
-      }
-    }
+function displayUserDishes(savedDishes) {
+  let dishListEl = document.querySelector("#saved-recipes > ul");
+  while (dishListEl.childNodes.length > 0) {
+    dishListEl.removeChild(dishListEl.childNodes[0]);
   }
-  return nutritions;
+
+  // Go throguh savedDishes
+  for (const [name, ingredients] of Object.entries(savedDishes)) {
+    addElementToParent("li", name, dishListEl, "", savedDishes[name].id);
+  }
+  // create li elements with the dishes id
+  console.log(dishListEl.childNodes);
 }
 
 function addIngredientToList(ingredient) {
@@ -346,16 +346,15 @@ function drawChart(element, data) {
 // * Prepare DOM Layout ----- ----- ----- ----- -----
 
 let recipe = [];
-let savedRecipes = {};
-
+let savedDishes = {};
 const tableHeader = ["Type", "DRI", "Unit"];
 let remove = document.querySelectorAll(".remove");
-
 const saveRecpie = document.querySelector("#save-recipe");
 const clearRecpie = document.querySelector("#clear-recipe");
 const form = document.querySelector("form");
 const dishNameEl = document.querySelector("#dish-name");
 const dishHeader = document.querySelector("#dish-header");
+
 let dish = {
   name: "",
   placeholder: "Unnamed dish",
@@ -364,7 +363,7 @@ let dish = {
 if (!dish.name) saveRecpie.disabled = true;
 
 dishNameEl.addEventListener("keyup", (event) => {
-  dishName = dishNameEl.value;
+  dish.name = dishNameEl.value;
   console.log(dish.name);
 
   if (dishNameEl.value) {
@@ -400,11 +399,14 @@ document.addEventListener("mouseover", (event) => {
   );
 });
 
+// FIXME so dishname get capitalized
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
-    savedRecipes[dish.name] = recipe;
-    console.log(savedRecipes);
+    savedDishes[dish.name] = recipe;
+    savedDishes[dish.name]["id"] = dish.name.toLowerCase().replace(" ", "-");
+    displayUserDishes(savedDishes);
+    console.log(savedDishes);
     dishNameEl.value = "";
   }
 });
@@ -415,6 +417,7 @@ clearRecpie.addEventListener("click", (event) => {
   clearIngredientList();
   dishHeader.innerText = dish.placeholder;
   dishNameEl.value = "";
+  dishNameE.value = "";
 });
 
 /**  */

@@ -70,19 +70,14 @@ main {
       // margin: 1em;
       flex-wrap: wrap;
       li:hover {
+        cursor: pointer;
         // background-color: rgb(201, 228, 253, 0.5);
         // border: $primary 1px solid;
         background-color: $primary;
         color: $bg-primary;
       }
-      a:visited {
-        color: none;
-      }
-      a {
-        text-decoration: none;
-        margin: 0.2em 0.1em;
-      }
       li {
+        margin: 0.2em 0.1em;
         border: rgba(0, 0, 0, 0) 1px solid;
         background-color: $bg-primary;
         color: $primary;
