@@ -346,8 +346,32 @@ function drawChart(element, data) {
 // * Prepare DOM Layout ----- ----- ----- ----- -----
 
 let recipe = [];
-let remove = document.querySelectorAll(".remove");
+let savedRecipes = {};
+
 const tableHeader = ["Type", "DRI", "Unit"];
+let remove = document.querySelectorAll(".remove");
+
+const saveRecpie = document.querySelector("#save-recipe");
+const clearRecpie = document.querySelector("#clear-recipe");
+const form = document.querySelector("form");
+const dishNameEl = document.querySelector("#dish-name");
+const dishHeader = document.querySelector("#dish-header");
+let dishName = "";
+
+if (!dishName) saveRecpie.disabled = true;
+
+dishNameEl.addEventListener("keyup", (event) => {
+  dishName = dishNameEl.value;
+  console.log(dishName);
+
+  if (dishNameEl.value) {
+    dishHeader.innerText = dishNameEl.value;
+    saveRecpie.disabled = false;
+  } else {
+    dishHeader.innerText = "Unnamed dish";
+    saveRecpie.disabled = true;
+  }
+});
 
 generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
@@ -373,12 +397,15 @@ document.addEventListener("mouseover", (event) => {
   );
 });
 
-const saveRecpie = document.querySelector("#save-recipe");
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
+  if (dishName) {
+    savedRecipes[dishName] = recipe;
+    console.log(savedRecipes);
+    dishNameEl.value = "";
+  }
 });
 
-const clearRecpie = document.querySelector("#clear-recipe");
 clearRecpie.addEventListener("click", (event) => {
   recipe = [];
   generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
@@ -386,7 +413,6 @@ clearRecpie.addEventListener("click", (event) => {
 });
 
 /**  */
-let form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   const ingredient = document.querySelector("#ingredient").value;
   const weight = Number(document.querySelector("#weight").value);

@@ -42,16 +42,19 @@
       </section>
       <section id="ingredient-input">
         <form>
-          <input type="text" placeholder="oats" id="ingredient" autocomplete="off" class="grow">
-          <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight">
-          <button type="submit">Add</button>
+          <input type="text" name="" id="dish-name" placeholder="Dish name" autocomplete="off">
+          <div id="user-input-field">
+            <input type="text" placeholder="Ingredient ex 'oats'" id="ingredient" autocomplete="off" class="grow">
+            <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight">
+            <button type="submit">Add</button>
+          </div>
         </form>
       </section>
       <section class="warning hidden" id="war-invalid-ingredient">
         <p><strong>Not a valid input, check your spelling and try again</strong></p>
       </section>
-      <h2>Recipe</h2>
       <section id="ingredient-list">
+        <h2 id="dish-header">Unnamed dish</h2>
         <ul>
           <!--    <li class="ingredient">
             <p class="grow">Oats</p>
@@ -71,8 +74,8 @@
         </ul>
       </section>
       <section id="recipe-action">
-        <button id="clear-recipe">Clear recipe</button>
-        <button id="save-recipe">Save recipe</button>
+        <button id="clear-recipe">Clear ingredients</button>
+        <button id="save-recipe">Save dish</button>
       </section>
       <section id="nutrient-facts">
         <h2>Nutrition Facts</h2>

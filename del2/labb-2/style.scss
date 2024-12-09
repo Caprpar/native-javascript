@@ -101,7 +101,11 @@ main {
     margin-bottom: 0;
     box-shadow: 0 2px 2px 2px rgba(213, 215, 216, 0.6);
     border-radius: 1em;
-    min-height: 4.3em;
+    min-height: 7em;
+
+    h2 {
+      color: $dark;
+    }
 
     ul {
       padding: 0;
@@ -132,7 +136,18 @@ main {
   }
 
   #ingredient-input {
-    form {
+    #dish-name:focus {
+      outline: none;
+    }
+    #dish-name {
+      padding-left: 0.5em;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: none;
+      height: 3em;
+      width: auto;
+      border-radius: 10px 10px 0 0;
+    }
+    #user-input-field {
       display: flex;
       justify-content: space-between;
       #ingredient:focus {
@@ -140,11 +155,11 @@ main {
       }
       #ingredient {
         width: min(60%, 20em);
+        border-radius: 0 0 0 10px;
         height: 3em;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-right: none;
         padding-left: 0.5em;
-        border-radius: 10px 0 0 10px;
       }
       #weight:focus {
         outline: none;
@@ -179,6 +194,10 @@ main {
 
     #save-recipe:hover {
       outline: $success 0.1em solid;
+    }
+    #save-recipe:disabled {
+      opacity: 0.5;
+      outline: none;
     }
     #save-recipe {
       color: $success;
@@ -249,8 +268,8 @@ table {
 .warning {
   margin: 1em 0;
   border: solid;
-  background-color: $bg-warning;
-  color: $warning;
+  background-color: $bg-danger;
+  color: $danger;
   width: 100%;
   text-align: center;
   p {
