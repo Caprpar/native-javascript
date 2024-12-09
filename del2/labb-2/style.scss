@@ -27,6 +27,20 @@ $dark: #0e1114;
   color: $dark;
 }
 
+@mixin button-settings-hover {
+  background-color: $bg-secondary;
+  color: $light;
+}
+@mixin button-settings {
+  padding: 0 1em;
+  background-color: $bg-light;
+  color: $light;
+  font-weight: 900;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-left: 0.5em;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -84,6 +98,7 @@ main {
     background-color: $bg-warning;
     padding: 0.1em 1em;
     margin: 2em 0;
+    margin-bottom: 0;
     box-shadow: 0 2px 2px 2px rgba(213, 215, 216, 0.6);
     border-radius: 1em;
     min-height: 4.3em;
@@ -103,10 +118,11 @@ main {
       }
     }
     .ingredient {
+      color: $dark;
       display: flex;
       flex-direction: row;
       padding: 0.5em 0 0.5em 0.2em;
-      border-bottom: solid 0.1em $bg-dark;
+      border-bottom: dashed 1.9px $light;
       align-items: end;
       p {
         margin: 0;
@@ -119,34 +135,62 @@ main {
     form {
       display: flex;
       justify-content: space-between;
-      #ingredient-input {
+      #ingredient:focus {
+        outline: none;
+      }
+      #ingredient {
         width: min(60%, 20em);
         height: 3em;
-        border: 1px solid $dark;
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-right: none;
         padding-left: 0.5em;
         border-radius: 10px 0 0 10px;
       }
-      #weight-input {
+      #weight:focus {
+        outline: none;
+      }
+      #weight {
+        border: 1px solid rgba(0, 0, 0, 0.2);
         padding-left: 0.5em;
         width: max(18%, 5em);
-        border: 1px solid $dark;
-        border-left: dashed $dark 0.5px;
+        border-left: dashed rgba(0, 0, 0, 0.2) 0.5px;
         border-radius: 0 10px 10px 0;
       }
       button:hover {
-        background-color: $bg-secondary;
-        color: $light;
+        @include button-settings-hover();
       }
       button {
-        padding: 0 1em;
-        background-color: $bg-light;
-        color: $light;
-        font-weight: 900;
-        border: $light 0.2em solid;
-        border-radius: 10px;
-        margin-left: 0.5em;
+        @include button-settings();
       }
+    }
+  }
+
+  #recipe-action {
+    display: flex;
+    justify-content: end;
+    width: 100;
+    margin: 1em 0;
+
+    button {
+      @include button-settings();
+      height: 3em;
+      font-weight: 100;
+    }
+
+    #save-recipe:hover {
+      outline: $success 0.1em solid;
+    }
+    #save-recipe {
+      color: $success;
+      background: $bg-success;
+    }
+
+    #clear-recipe:hover {
+      outline: $danger 0.1em solid;
+    }
+    #clear-recipe {
+      color: $danger;
+      background: $bg-danger;
     }
   }
 }
@@ -183,12 +227,9 @@ table {
   border: solid;
 }
 
-.remove:hover {
-  cursor: pointer;
-  background-color: $bg-dark;
-}
-
 .remove {
+  background-color: $bg-danger;
+  cursor: pointer;
   margin-right: 0.4em;
   border-radius: 100px;
   display: none;
@@ -225,7 +266,7 @@ table {
   .remove {
     display: block;
     cursor: pointer;
-    background-color: $bg-dark;
+    background-color: $bg-danger;
     border-radius: 100px;
   }
 }

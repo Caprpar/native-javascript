@@ -42,8 +42,8 @@
       </section>
       <section id="ingredient-input">
         <form>
-          <input type="text" placeholder="oats" id="ingredient-input" autocomplete="off" class="grow">
-          <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight-input">
+          <input type="text" placeholder="oats" id="ingredient" autocomplete="off" class="grow">
+          <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight">
           <button type="submit">Add</button>
         </form>
       </section>
@@ -53,22 +53,26 @@
       <h2>Recipe</h2>
       <section id="ingredient-list">
         <ul>
-          <!-- <li class="ingredient">
-            <p>200g</p>
+          <!--    <li class="ingredient">
             <p class="grow">Oats</p>
+            <p>200g</p>
             <div class="remove"></div>
           </li>
           <li class="ingredient">
-            <p>20g</p>
             <p class="grow">Peanuts</p>
+            <p>20g</p>
             <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
           </li>
           <li class="ingredient">
-            <p>80g</p>
             <p class="grow">Banana</p>
+            <p>80g</p>
             <div class="remove" data-tooltip-text="ta bort" role="button" aria-label="ta bort"></div>
           </li> -->
         </ul>
+      </section>
+      <section id="recipe-action">
+        <button id="clear-recipe">Clear recipe</button>
+        <button id="save-recipe">Save recipe</button>
       </section>
       <section id="nutrient-facts">
         <h2>Nutrition Facts</h2>

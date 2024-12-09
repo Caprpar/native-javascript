@@ -97,11 +97,20 @@ function addIngredientToList(ingredient) {
   const newIngredient = document.createElement("li");
   newIngredient.classList = "ingredient";
 
-  addElementToParent("p", `${ingredient.weight}g`, newIngredient);
   addElementToParent("p", `${ingredient.name}`, newIngredient, "grow");
+  addElementToParent("p", `${ingredient.weight}g`, newIngredient);
   addElementToParent("div", "", newIngredient, "remove");
 
   list.appendChild(newIngredient);
+}
+
+function clearIngredientList() {
+  const listEl = document.querySelector("#ingredient-list > ul");
+  console.log(listEl);
+  while (listEl.childNodes.length > 0) {
+    listEl.removeChild(listEl.childNodes[0]);
+    console.log("removed", listEl.childNodes[0]);
+  }
 }
 
 /** Get the total nutrient value from each userIngredient and return as object batch*/
@@ -350,8 +359,8 @@ document.addEventListener("mouseover", (event) => {
     element.addEventListener("click", (event) => {
       // Remove from userList as well
 
-      let ingredientWeight = element.parentElement.childNodes[0].innerText;
-      let ingredientName = element.parentElement.childNodes[1].innerText;
+      let ingredientName = element.parentElement.childNodes[0].innerText;
+      let ingredientWeight = element.parentElement.childNodes[1].innerText;
 
       for (const [index, ingredient] of recipe.entries()) {
         if (ingredient.name === ingredientName && ingredientWeight.includes(String(ingredient.weight)))
@@ -362,6 +371,18 @@ document.addEventListener("mouseover", (event) => {
       generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
     })
   );
+});
+
+const saveRecpie = document.querySelector("#save-recipe");
+saveRecpie.addEventListener("click", (event) => {
+  console.log("Saved recpie");
+});
+
+const clearRecpie = document.querySelector("#clear-recipe");
+clearRecpie.addEventListener("click", (event) => {
+  recipe = [];
+  generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
+  clearIngredientList();
 });
 
 /**  */
