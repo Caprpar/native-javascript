@@ -363,6 +363,7 @@ let recipe = [];
 let savedDishes = {};
 const tableHeader = ["Type", "DRI", "Unit"];
 let remove = document.querySelectorAll(".remove");
+let savedDishEl = document.querySelectorAll("#saved-recipes > ul > li");
 const saveRecpie = document.querySelector("#save-recipe");
 const clearRecpie = document.querySelector("#clear-recipe");
 const form = document.querySelector("form");
@@ -389,7 +390,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 dishNameEl.addEventListener("keyup", (event) => {
   dish.name = dishNameEl.value;
   dish.name = dish.name.charAt(0).toUpperCase() + dish.name.toLowerCase().slice(1);
-  console.log(dish.name);
 
   if (dishNameEl.value) {
     dishHeader.innerText = dishNameEl.value;
@@ -405,6 +405,22 @@ generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 /* if mouse over specific ingredient show that ingredients "remove" icon */
 document.addEventListener("mouseover", (event) => {
   remove = document.querySelectorAll(".remove");
+  savedDishEl = document.querySelectorAll("#saved-recipes > ul > li");
+
+  /* Decide what happens when pressed on a saved dish */
+  savedDishEl.forEach((element) => {
+    element.addEventListener("click", (event) => {
+      const currentDishId = element.id;
+
+      for (const dish of Object.values(savedDishes)) {
+        // console.log(dish);
+        if (dish.id === currentDishId) {
+          console.log(dish.recipe);
+          // TODO Append ingredients to recipe list DOM
+        }
+      }
+    });
+  });
 
   /** Remove Node and ingredient from list when click on cross */
   remove.forEach((element) =>
@@ -431,8 +447,9 @@ document.addEventListener("mouseover", (event) => {
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
-    savedDishes[dish.name] = recipe;
-    savedDishes[dish.name]["id"] = dish.name.toLowerCase().replace(" ", "-");
+    savedDishes[dish.name] = { recipe: [], id: "" };
+    savedDishes[dish.name].recipe = recipe;
+    savedDishes[dish.name]["id"] = dish.name.toLowerCase().replaceAll(" ", "-");
     displayUserDishes(savedDishes);
     console.log(savedDishes);
     dishNameEl.value = "";
