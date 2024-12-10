@@ -274,7 +274,7 @@ function getBatchTotalValues(userIngredients) {
  * @param {String} listId - id of the table
  */
 function generateTable(batch, headers, tableId = "") {
-  // FIXME So it generates empty table if userInput is none
+  // FIXME So table has same rows
   // remove table if tableId already exists, so it'll be able to update table
   if (document.querySelector(`#${tableId}`)) {
     document.querySelector(`#${tableId}`).remove();
@@ -342,6 +342,20 @@ function drawChart(element, data) {
     },
   });
 }
+
+/* Store savedDishes locally in browser */
+function saveDishListToLocalStorage(savedDishes, location = "savedDishes") {
+  savedDishes = JSON.stringify(savedDishes);
+  sessionStorage.setItem(location, savedDishes);
+}
+
+/* Retrive savedDishes from browser */
+function getDishListFromLocalStorage(location = "savedDishes") {
+  let data = sessionStorage.getItem(location);
+  data = JSON.parse(data);
+  return data;
+}
+
 // * Main ----- ----- ----- ----- -----
 // * Prepare DOM Layout ----- ----- ----- ----- -----
 
@@ -360,10 +374,21 @@ let dish = {
   placeholder: "Unnamed dish",
 };
 
+/* Disables save button if dishname input is empty */
 if (!dish.name) saveRecpie.disabled = true;
 
+document.addEventListener("DOMContentLoaded", (event) => {
+  savedDishes = {};
+  if (getDishListFromLocalStorage()) {
+    savedDishes = getDishListFromLocalStorage();
+    displayUserDishes(savedDishes);
+  }
+});
+
+/* Updates dishname when user type dishname */
 dishNameEl.addEventListener("keyup", (event) => {
   dish.name = dishNameEl.value;
+  dish.name = dish.name.charAt(0).toUpperCase() + dish.name.toLowerCase().slice(1);
   console.log(dish.name);
 
   if (dishNameEl.value) {
@@ -377,6 +402,7 @@ dishNameEl.addEventListener("keyup", (event) => {
 
 generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
+/* if mouse over specific ingredient show that ingredients "remove" icon */
 document.addEventListener("mouseover", (event) => {
   remove = document.querySelectorAll(".remove");
 
@@ -400,6 +426,8 @@ document.addEventListener("mouseover", (event) => {
 });
 
 // FIXME so dishname get capitalized
+// FIXME savedDishes gets saved in local storage
+/* Saves current ingredient to a complete dish and stores it in savedDishes */
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
@@ -408,16 +436,20 @@ saveRecpie.addEventListener("click", (event) => {
     displayUserDishes(savedDishes);
     console.log(savedDishes);
     dishNameEl.value = "";
+    saveDishListToLocalStorage(savedDishes);
   }
 });
 
+/* Clears all ingredients and empties recipie array */
 clearRecpie.addEventListener("click", (event) => {
   recipe = [];
   generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
   clearIngredientList();
   dishHeader.innerText = dish.placeholder;
   dishNameEl.value = "";
-  dishNameE.value = "";
+  saveRecpie.disabled = true;
+  document.querySelector("#ingredient").value = "";
+  document.querySelector("#weight").value = "";
 });
 
 /**  */

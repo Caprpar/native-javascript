@@ -25,6 +25,7 @@ $dark: #0e1114;
 * {
   font-family: Arial, Helvetica, sans-serif;
   color: $dark;
+  // border: solid;
 }
 
 @mixin button-settings-hover {
@@ -54,9 +55,20 @@ body {
 
 #page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: 2em;
-  width: 95vw;
+  width: 60em;
+}
+nav {
+  ul {
+    display: flex;
+    padding: 0;
+    li {
+      list-style-type: none;
+      margin-right: 1em;
+    }
+  }
 }
 
 main {
