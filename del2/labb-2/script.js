@@ -1,8 +1,6 @@
 // let url = `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr="oats"`;
 
-// TODO make so the key are retrived from external file
 /* Returns url from chosen product */
-
 function getIngredientUrl(product) {
   return `https://api.edamam.com/api/nutrition-data?app_id=d3b855f7&app_key=35b2a48f920867abd283496625b0ddd4&nutrition-type=logging&ingr=${product}`;
 }
@@ -54,13 +52,21 @@ function setDRIByWeight(ingredient) {
   }
 }
 
-/**  */
+/**
+ * @param {Node} element - child element
+ * @param {String} innerText - childs inner text
+ * @param {Node} parent - parent, child will append to
+ * @param {String} classList - childs classes if any
+ * @param {String} id - childs id if any
+ * @returns {Node} child element
+ */
 function addElementToParent(element, innerText, parent, classList = "", id = "") {
   let el = document.createElement(element);
   el.innerText = innerText ? innerText : "";
   if (classList) el.classList = classList;
   if (id) el.id = id;
   parent.appendChild(el);
+  return el;
 }
 
 /* Check if user input is a valid ingredient from the api */
@@ -68,6 +74,10 @@ function isValidInput(ingredient) {
   return ingredient.portionWeight ? true : false;
 }
 
+/**
+ * @param {string} id - the warning elements id
+ * @param {boolean} [display=true] - elements visibility
+ */
 function displayWarning(id, display = true) {
   const warEl = document.querySelector(`#${id}`);
   if (display) {
@@ -77,6 +87,10 @@ function displayWarning(id, display = true) {
   }
 }
 
+/**
+ * @param {Object} savedDishes - Object of saved dishes
+ * Updates the Node list of users saved dishes
+ */
 function displayUserDishes(savedDishes) {
   let dishListEl = document.querySelector("#saved-recipes > ul");
   while (dishListEl.childNodes.length > 0) {
@@ -85,12 +99,16 @@ function displayUserDishes(savedDishes) {
 
   // Go throguh savedDishes
   for (const [name, ingredients] of Object.entries(savedDishes)) {
-    addElementToParent("li", name, dishListEl, "", savedDishes[name].id);
+    giveSavedDishEvent(addElementToParent("li", name, dishListEl, "", savedDishes[name].id), ingredients);
   }
   // create li elements with the dishes id
   console.log(dishListEl.childNodes);
 }
 
+/**
+ * @param {Object} ingredient - Object retried from API
+ * Append current ingredient as node to #ingredient-list
+ */
 function addIngredientToList(ingredient) {
   const list = document.querySelector("#ingredient-list > ul");
 
@@ -99,7 +117,10 @@ function addIngredientToList(ingredient) {
 
   addElementToParent("p", `${ingredient.name}`, newIngredient, "grow");
   addElementToParent("p", `${ingredient.weight}g`, newIngredient);
-  addElementToParent("div", "", newIngredient, "remove");
+
+  giveRemoveEvent(addElementToParent("div", "", newIngredient, "remove"), ingredient.name, ingredient.weight);
+
+  // TODO ge remove eventlistener
 
   list.appendChild(newIngredient);
 }
@@ -273,7 +294,7 @@ function getBatchTotalValues(userIngredients) {
  * @param {Array} headers - ["type", "dri", "(g)"]
  * @param {String} listId - id of the table
  */
-function generateTable(batch, headers, tableId = "") {
+function generateTable(batch, headers = ["type", "dri", "(g)"], tableId = "") {
   // FIXME So table has same rows
   // remove table if tableId already exists, so it'll be able to update table
   if (document.querySelector(`#${tableId}`)) {
@@ -343,17 +364,42 @@ function drawChart(element, data) {
   });
 }
 
-/* Store savedDishes locally in browser */
+/* Store store users saved dishes in session storage */
 function saveDishListToLocalStorage(savedDishes, location = "savedDishes") {
   savedDishes = JSON.stringify(savedDishes);
   sessionStorage.setItem(location, savedDishes);
 }
 
-/* Retrive savedDishes from browser */
+/* Retrive the users saved dishes from session storage */
 function getDishListFromLocalStorage(location = "savedDishes") {
   let data = sessionStorage.getItem(location);
   data = JSON.parse(data);
   return data;
+}
+
+/* When a remove element is pressed remove that ingredient from ingredient-list and update nutrient information */
+function giveRemoveEvent(removeEl, ingredientName, ingredientWeight) {
+  removeEl.addEventListener("click", (event) => {
+    for (const [index, ingredient] of recipe.entries()) {
+      if (ingredient.name === ingredientName && ingredientWeight === ingredient.weight) recipe.splice(index, 1);
+    }
+    console.log(recipe);
+    event.target.parentElement.remove();
+    generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
+  });
+}
+
+/* When a saved dish is pressed, insert saved ingredients to #ingredient-list */
+function giveSavedDishEvent(savedDishEl, ingredients) {
+  savedDishEl.addEventListener("click", (event) => {
+    const currentDishId = savedDishEl.id;
+
+    for (const ingredient of ingredients.recipe) {
+      recipe.push(ingredient);
+      addIngredientToList(ingredient);
+    }
+    generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
+  });
 }
 
 // * Main ----- ----- ----- ----- -----
@@ -362,8 +408,7 @@ function getDishListFromLocalStorage(location = "savedDishes") {
 let recipe = [];
 let savedDishes = {};
 const tableHeader = ["Type", "DRI", "Unit"];
-let remove = document.querySelectorAll(".remove");
-let savedDishEl = document.querySelectorAll("#saved-recipes > ul > li");
+const allSavedRecipes = document.querySelector("#saved-recipes > ul");
 const saveRecpie = document.querySelector("#save-recipe");
 const clearRecpie = document.querySelector("#clear-recipe");
 const form = document.querySelector("form");
@@ -378,6 +423,8 @@ let dish = {
 /* Disables save button if dishname input is empty */
 if (!dish.name) saveRecpie.disabled = true;
 
+/* When content is loaded, retrive users saved dishes (if any) and display them
+in saved dishes*/
 document.addEventListener("DOMContentLoaded", (event) => {
   savedDishes = {};
   if (getDishListFromLocalStorage()) {
@@ -386,13 +433,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 });
 
-/* Updates dishname when user type dishname */
+/* Formats user input to to capitalized and updates dishname on key input */
 dishNameEl.addEventListener("keyup", (event) => {
   dish.name = dishNameEl.value;
   dish.name = dish.name.charAt(0).toUpperCase() + dish.name.toLowerCase().slice(1);
-
   if (dishNameEl.value) {
-    dishHeader.innerText = dishNameEl.value;
+    dishHeader.innerText = dish.name;
     saveRecpie.disabled = false;
   } else {
     dishHeader.innerText = dish.placeholder;
@@ -402,48 +448,7 @@ dishNameEl.addEventListener("keyup", (event) => {
 
 generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
-/* if mouse over specific ingredient show that ingredients "remove" icon */
-document.addEventListener("mouseover", (event) => {
-  remove = document.querySelectorAll(".remove");
-  savedDishEl = document.querySelectorAll("#saved-recipes > ul > li");
-
-  /* Decide what happens when pressed on a saved dish */
-  savedDishEl.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      const currentDishId = element.id;
-
-      for (const dish of Object.values(savedDishes)) {
-        // console.log(dish);
-        if (dish.id === currentDishId) {
-          console.log(dish.recipe);
-          // TODO Append ingredients to recipe list DOM
-        }
-      }
-    });
-  });
-
-  /** Remove Node and ingredient from list when click on cross */
-  remove.forEach((element) =>
-    element.addEventListener("click", (event) => {
-      // Remove from userList as well
-
-      let ingredientName = element.parentElement.childNodes[0].innerText;
-      let ingredientWeight = element.parentElement.childNodes[1].innerText;
-
-      for (const [index, ingredient] of recipe.entries()) {
-        if (ingredient.name === ingredientName && ingredientWeight.includes(String(ingredient.weight)))
-          recipe.splice(index, 1);
-      }
-      console.log(recipe);
-      event.target.parentElement.remove();
-      generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
-    })
-  );
-});
-
-// FIXME so dishname get capitalized
-// FIXME savedDishes gets saved in local storage
-/* Saves current ingredient to a complete dish and stores it in savedDishes */
+/* Saves current ingredients to a complete dish and stores it in session storage*/
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
@@ -457,7 +462,7 @@ saveRecpie.addEventListener("click", (event) => {
   }
 });
 
-/* Clears all ingredients and empties recipie array */
+/* Clears clear #ingredient-list, all input values and empties recipie array */
 clearRecpie.addEventListener("click", (event) => {
   recipe = [];
   generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
@@ -469,7 +474,14 @@ clearRecpie.addEventListener("click", (event) => {
   document.querySelector("#weight").value = "";
 });
 
-/**  */
+/**
+ * Takes input ingredient to fetch ingredients nutritionvalues from api,
+ * if api.totalWeight = 0 the ingredient dosent exist and will raise an error.
+ * if ingredient is valid, grab nutrient information and recalculate all values
+ * from users weight input
+ * finally update nutirent table with summed values from all #ingredient-list
+ * ingredients.
+ */
 form.addEventListener("submit", (event) => {
   const ingredient = document.querySelector("#ingredient").value;
   const weight = Number(document.querySelector("#weight").value);
@@ -493,6 +505,7 @@ form.addEventListener("submit", (event) => {
       }
 
       console.log(recipe);
+      remove = document.querySelectorAll(".remove");
     });
 
   event.preventDefault();
