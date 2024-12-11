@@ -335,36 +335,6 @@ function generateTable(batch, headers = ["type", "dri", "(g)"], tableId = "") {
   parent.appendChild(table);
 }
 
-/**
- * @param {Node} element - document.querySelecotr("#my-chart")
- * @param {List} data - myObj = [{caspar: 25}, {olle: 45}, {peder: 22}]
- */
-function drawChart(element, data) {
-  const colors = ["#999", "#000"];
-  const options = {};
-  new Chart(element, {
-    type: "bar",
-    data: {
-      labels: Object.keys(data),
-      datasets: [
-        {
-          backgroundColor: colors,
-          label: "# of votes",
-          data: Object.values(data),
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-}
-
 /* Store store users saved dishes in session storage */
 function saveDishListToLocalStorage(savedDishes, location = "savedDishes") {
   savedDishes = JSON.stringify(savedDishes);
@@ -455,9 +425,10 @@ generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 saveRecpie.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
-    savedDishes[dish.name] = { recipe: [], id: "" };
+    savedDishes[dish.name] = { recipe: [], id: "", name: "" };
     savedDishes[dish.name].recipe = recipe;
     savedDishes[dish.name]["id"] = dish.name.toLowerCase().replaceAll(" ", "-");
+    savedDishes[dish.name].name = dish.name;
     displayUserDishes(savedDishes);
     console.log(savedDishes);
     dishNameEl.value = "";

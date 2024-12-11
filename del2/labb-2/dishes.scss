@@ -1,0 +1,69 @@
+$bg-success: #d0edda;
+$success: #045b21;
+
+$bg-info: #cdecf0;
+$info: #00565f;
+
+$bg-warning: #fff2cf;
+$warning: #866310;
+
+$bg-danger: #fbd5d9;
+$danger: #760b18;
+
+$bg-primary: #c9e4fd;
+$primary: #004280;
+
+$bg-secondary: #e1e2e4;
+$secondary: #343f43;
+
+$bg-light: #fefefe;
+$light: #808081;
+
+$bg-dark: #d5d7d8;
+$dark: #0e1114;
+
+#card-holder {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding-top: 10px;
+  // border: solid;
+  .chart-card {
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    justify-content: center;
+    height: fit-content;
+    width: 100%;
+    background-color: $primary;
+    margin: 1em 0;
+
+    h2 {
+      color: $bg-light;
+    }
+
+    box-shadow: 0 2px 4px 4px rgba(213, 215, 216, 0.6);
+    .chart {
+      // margin-top: 2.5em;
+      border: solid $primary 0.5em;
+      border-radius: 1em;
+      background-color: $bg-light;
+      width: 50%;
+      height: 350px;
+      border-radius: 1em 1em 0 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  #card-holder {
+    flex-direction: row;
+    .chart-card {
+      // height: 38em;
+      width: 21em;
+      margin: 1em;
+    }
+  }
+}
