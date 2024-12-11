@@ -125,6 +125,7 @@ function addIngredientToList(ingredient) {
   list.appendChild(newIngredient);
 }
 
+/* Go through all elements and removes them from #ingredient-list */
 function clearIngredientList() {
   const listEl = document.querySelector("#ingredient-list > ul");
   console.log(listEl);
@@ -382,6 +383,7 @@ function giveRemoveEvent(removeEl, ingredientName, ingredientWeight) {
   removeEl.addEventListener("click", (event) => {
     for (const [index, ingredient] of recipe.entries()) {
       if (ingredient.name === ingredientName && ingredientWeight === ingredient.weight) recipe.splice(index, 1);
+      break;
     }
     console.log(recipe);
     event.target.parentElement.remove();
@@ -415,6 +417,7 @@ const form = document.querySelector("form");
 const dishNameEl = document.querySelector("#dish-name");
 const dishHeader = document.querySelector("#dish-header");
 
+/* If there are no input, dishname is autmaticy unnamed. otherwise stores the name in disn.name */
 let dish = {
   name: "",
   placeholder: "Unnamed dish",
