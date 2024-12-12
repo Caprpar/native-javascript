@@ -3,29 +3,57 @@
  * @param {List} data - myObj = [{caspar: 25}, {olle: 45}, {peder: 22}]
  */
 function drawChart(element, data) {
-  let myChart = new Chart(element, {
-    type: "bar",
-    data: {
-      labels: Object.keys(data),
-      datasets: [
-        {
-          label: "DRI values",
-          backgroundColor: ["#3e95cd66", "#8e5ea266", "#3cba9f66", "#e8c3b966", "#c4585066"],
-          data: Object.values(data),
-        },
-      ],
-    },
-    options: {
-      barThickness: 12,
-      // maintainAspectRatio: false,
-      aspectRatio: 0.5, //TODO configure better sizing on chart
-      indexAxis: "y",
-      title: {
-        display: true,
-        text: "Predicted world population (millions) in 2050",
+  let desktop = window.matchMedia("(min-width:1024px)").matches;
+  // desktop = true;
+  if (desktop) {
+    let myChart = new Chart(element, {
+      type: "bar",
+      data: {
+        labels: Object.keys(data),
+        datasets: [
+          {
+            label: "DRI values",
+            backgroundColor: ["#3e95cd66", "#8e5ea266", "#3cba9f66", "#e8c3b966", "#c4585066"],
+            data: Object.values(data),
+          },
+        ],
       },
-    },
-  });
+      options: {
+        barThickness: 12,
+        // maintainAspectRatio: false,
+        // aspectRatio: 0.5, //TODO configure better sizing on chart
+        indexAxis: "x",
+        title: {
+          display: true,
+          text: "Predicted world population (millions) in 2050",
+        },
+      },
+    });
+  } else {
+    let myChart = new Chart(element, {
+      type: "bar",
+      data: {
+        labels: Object.keys(data),
+        datasets: [
+          {
+            label: "DRI values",
+            backgroundColor: ["#3e95cd66", "#8e5ea266", "#3cba9f66", "#e8c3b966", "#c4585066"],
+            data: Object.values(data),
+          },
+        ],
+      },
+      options: {
+        barThickness: 12,
+        // maintainAspectRatio: false,
+        aspectRatio: 0.5, //TODO configure better sizing on chart
+        indexAxis: "y",
+        title: {
+          display: true,
+          text: "Predicted world population (millions) in 2050",
+        },
+      },
+    });
+  }
 }
 
 function getDriValues(batch) {

@@ -42,7 +42,7 @@ h1 {
     flex-direction: column-reverse;
     justify-content: center;
     height: fit-content;
-    width: 100em;
+    width: 100%;
     background-color: #5c886c;
     margin: 1em 0;
 
@@ -66,9 +66,9 @@ h1 {
 @media (min-width: 1024px) {
   #card-holder {
     flex-direction: row;
+    flex-wrap: wrap;
     .chart-card {
-      // height: 38em;
-      width: 21em;
+      width: 75em;
       margin: 1em;
     }
   }
