@@ -18,9 +18,8 @@ function drawChart(element, data) {
     options: {
       barThickness: 12,
       // maintainAspectRatio: false,
-      aspectRatio: 0.5,
+      aspectRatio: 0.5, //TODO configure better sizing on chart
       indexAxis: "y",
-      // clip: { bottom: -1 },
       title: {
         display: true,
         text: "Predicted world population (millions) in 2050",
@@ -43,6 +42,7 @@ function createGraphCard(dish) {
   chartCard.classList = "chart-card";
   addElementToParent("h2", dish.name, chartCard);
   addElementToParent("canvas", "", chartCard, "chart", dish.id);
+  // TODO: add eventlistener to saved dish element that can remove element on hover
   parent.appendChild(chartCard);
 
   let data = getDriValues(getBatchTotalValues(dish.recipe));
@@ -68,3 +68,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let data = getDriValues(batch);
   }
 });
+
+// TODO make eventlistener for desktop and change chart to horizontal for desk and vertical on phone

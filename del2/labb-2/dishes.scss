@@ -22,8 +22,9 @@ $light: #808081;
 $bg-dark: #d5d7d8;
 $dark: #0e1114;
 
-#page {
-  // border: solid;
+h1 {
+  border-bottom: dashed $bg-dark;
+  padding-bottom: 1em;
 }
 
 #card-holder {
@@ -41,8 +42,8 @@ $dark: #0e1114;
     flex-direction: column-reverse;
     justify-content: center;
     height: fit-content;
-    width: 100%;
-    background-color: $primary;
+    width: 100em;
+    background-color: #5c886c;
     margin: 1em 0;
 
     h2 {
@@ -52,7 +53,7 @@ $dark: #0e1114;
     box-shadow: 0 2px 4px 4px rgba(213, 215, 216, 0.6);
     .chart {
       // margin-top: 2.5em;
-      border: solid $primary 0.5em;
+      border: solid #5c886c 0.5em;
       border-radius: 1em;
       background-color: $bg-light;
       width: 50%;

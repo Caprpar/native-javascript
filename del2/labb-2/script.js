@@ -134,7 +134,6 @@ function clearIngredientList() {
 
 /** Get the total nutrient value from each userIngredient and return as object batch*/
 function getBatchTotalValues(userIngredients) {
-  // FIXME add units
   let batch = {};
   if (userIngredients.length > 0) {
     for (const [name, data] of Object.entries(userIngredients[userIngredients.length - 1].nutritionData)) {
@@ -293,7 +292,6 @@ function getBatchTotalValues(userIngredients) {
  * @param {String} listId - id of the table
  */
 function generateTable(batch, headers, tableId = "") {
-  // FIXME So table has same rows
   // remove table if tableId already exists, so it'll be able to update table
   if (document.querySelector(`#${tableId}`)) {
     document.querySelector(`#${tableId}`).remove();
@@ -379,7 +377,7 @@ let recipe = [];
 let savedDishes = {};
 const tableHeader = ["Type", "DRI", "Amount", "Unit"];
 const allSavedRecipes = document.querySelector("#saved-recipes > ul");
-const saveRecpie = document.querySelector("#save-recipe");
+const saveDish = document.querySelector("#save-recipe");
 const clearRecpie = document.querySelector("#clear-recipe");
 const form = document.querySelector("form");
 const dishNameEl = document.querySelector("#dish-name");
@@ -392,7 +390,7 @@ let dish = {
 };
 
 /* Disables save button if dishname input is empty */
-if (!dish.name) saveRecpie.disabled = true;
+if (!dish.name) saveDish.disabled = true;
 
 /* When content is loaded, retrive users saved dishes (if any) and display them
 in saved dishes*/
@@ -410,17 +408,17 @@ dishNameEl.addEventListener("keyup", (event) => {
   dish.name = dish.name.charAt(0).toUpperCase() + dish.name.toLowerCase().slice(1);
   if (dishNameEl.value) {
     dishHeader.innerText = dish.name;
-    saveRecpie.disabled = false;
+    saveDish.disabled = false;
   } else {
     dishHeader.innerText = dish.placeholder;
-    saveRecpie.disabled = true;
+    saveDish.disabled = true;
   }
 });
 
 generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
 /* Saves current ingredients to a complete dish and stores it in session storage*/
-saveRecpie.addEventListener("click", (event) => {
+saveDish.addEventListener("click", (event) => {
   console.log("Saved recpie");
   if (dish.name) {
     savedDishes[dish.name] = { recipe: [], id: "", name: "" };
@@ -441,7 +439,7 @@ clearRecpie.addEventListener("click", (event) => {
   clearIngredientList();
   dishHeader.innerText = dish.placeholder;
   dishNameEl.value = "";
-  saveRecpie.disabled = true;
+  saveDish.disabled = true;
   document.querySelector("#ingredient").value = "";
   document.querySelector("#weight").value = "";
 });
