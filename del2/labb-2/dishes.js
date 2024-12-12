@@ -67,7 +67,6 @@ function createGraphCard(dish) {
   chartCard.classList = "chart-card";
   addElementToParent("h2", dish.name, chartCard);
   addElementToParent("canvas", "", chartCard, "chart", dish.id);
-  // TODO: add eventlistener to saved dish element that can remove element on hover
   parent.appendChild(chartCard);
 
   let data = getDriValues(getBatchTotalValues(dish.recipe));

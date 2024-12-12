@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://developer.edamam.com/attribution/badge.js"></script>
 </head>
 
 <body>
@@ -20,7 +21,7 @@
       <a href="" class="current-page">
         <li>Dish maker</li>
       </a><a href="dishes.html">
-        <li>View dishes</li>
+        <li>My dishes</li>
       </a>
     </ul>
   </nav>
@@ -28,8 +29,12 @@
     <main>
 
       <section id="saved-recipes">
-        <h1>Saved recipes</h1>
+        <div id="saved-recipes-header-container">
+          <h1>Saved recipes</h1>
+          <span id="edit">REMOVE</span>
+        </div>
         <ul>
+
         </ul>
       </section>
       <div id="main-container">
@@ -64,8 +69,11 @@
       </div>
 
     </main>
+    <script src="script.js"></script>
+    <footer>
+      <div id="edamam-badge" data-color="white"></div>
+    </footer>
   </div>
-  <script src="script.js"></script>
 </body>
 
 </html>

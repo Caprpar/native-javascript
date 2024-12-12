@@ -99,7 +99,11 @@ function displayUserDishes(savedDishes) {
 
   // Go throguh savedDishes
   for (const [name, ingredients] of Object.entries(savedDishes)) {
-    giveSavedDishEvent(addElementToParent("li", name, dishListEl, "", savedDishes[name].id), ingredients);
+    const dishEl = addElementToParent("li", name, dishListEl, "", savedDishes[name].id);
+
+    const removeBTN = addElementToParent("div", "x", dishListEl, "remove-dish hidden");
+    giveSavedDishEvent(dishEl, ingredients);
+    giveDishRemoveBTNEvent(removeBTN, name);
   }
   // create li elements with the dishes id
   console.log(dishListEl.childNodes);
@@ -370,6 +374,16 @@ function giveSavedDishEvent(savedDishEl, ingredients) {
   });
 }
 
+function giveDishRemoveBTNEvent(removeEl, dish) {
+  removeEl.addEventListener("click", (event) => {
+    console.log("remove");
+    delete savedDishes[dish];
+    saveDishListToLocalStorage(savedDishes);
+    displayUserDishes(savedDishes);
+    console.log(savedDishes);
+  });
+}
+
 // * Main ----- ----- ----- ----- -----
 // * Prepare DOM Layout ----- ----- ----- ----- -----
 
@@ -479,4 +493,22 @@ form.addEventListener("submit", (event) => {
     });
 
   event.preventDefault();
+});
+
+document.querySelector("#edit").addEventListener("click", (event) => {
+  let editIsHidden = false;
+  let dishCross = document.querySelectorAll(".remove-dish");
+  if (editIsHidden) {
+    editIsHidden = false;
+    for (const cross of dishCross) {
+      cross.classList.add("hidden");
+    }
+  } else {
+    editIsHidden = true;
+    for (const cross of dishCross) {
+      cross.classList.remove("hidden");
+    }
+  }
+  console.log("redigera");
+  // TODO visa remove kryss vid respektive sparad recept
 });
