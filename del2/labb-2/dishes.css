@@ -1,0 +1,45 @@
+h1 {
+  border-bottom: dashed #d5d7d8;
+  padding-bottom: 1em;
+}
+
+#card-holder {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 10px;
+}
+#card-holder .chart-card {
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  justify-content: center;
+  width: 100%;
+  background-color: #5c886c;
+  margin: 1em 0;
+  box-shadow: 0 2px 4px 4px rgba(213, 215, 216, 0.6);
+}
+#card-holder .chart-card h2 {
+  color: #fefefe;
+}
+#card-holder .chart-card .chart {
+  border: solid #5c886c 0.5em;
+  border-radius: 1em;
+  background-color: #fefefe;
+  width: 50%;
+  height: 350px;
+  border-radius: 1em 1em 0 0;
+}
+
+@media (min-width: 1024px) {
+  #card-holder {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  #card-holder .chart-card {
+    width: 75em;
+    margin: 1em;
+  }
+}/*# sourceMappingURL=dishes.css.map */

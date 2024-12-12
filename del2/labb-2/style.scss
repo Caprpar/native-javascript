@@ -384,9 +384,11 @@ footer {
   color: $bg-light;
   width: 100%;
   #edamam-badge {
-    margin-right: 1em;
-    border: solid #5c886c 0.5em;
-    border-radius: 1em;
+    // margin-right: 1em;
+    // border: solid #d5d7d8 0.5em;
+    padding: 1em;
+    background-color: #d5d7d8;
+    // border-radius: 1em;
   }
 }
 
