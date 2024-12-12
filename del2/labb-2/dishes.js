@@ -19,9 +19,7 @@ function drawChart(element, data) {
         ],
       },
       options: {
-        barThickness: 12,
-        // maintainAspectRatio: false,
-        // aspectRatio: 0.5, //TODO configure better sizing on chart
+        barThickness: 20,
         indexAxis: "x",
         title: {
           display: true,
@@ -44,8 +42,7 @@ function drawChart(element, data) {
       },
       options: {
         barThickness: 12,
-        // maintainAspectRatio: false,
-        aspectRatio: 0.5, //TODO configure better sizing on chart
+        aspectRatio: 0.5,
         indexAxis: "y",
         title: {
           display: true,
