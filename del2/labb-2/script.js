@@ -119,9 +119,6 @@ function addIngredientToList(ingredient) {
   addElementToParent("p", `${ingredient.weight}g`, newIngredient);
 
   giveRemoveEvent(addElementToParent("div", "", newIngredient, "remove"), ingredient.name, ingredient.weight);
-
-  // TODO ge remove eventlistener
-
   list.appendChild(newIngredient);
 }
 
@@ -140,8 +137,8 @@ function getBatchTotalValues(userIngredients) {
   // FIXME add units
   let batch = {};
   if (userIngredients.length > 0) {
-    for (const [name, data] of Object.entries(userIngredients[userIngredients.length - 1].nutritionDaily)) {
-      batch[name] = { name: data.label, data: 0, dri: 0 };
+    for (const [name, data] of Object.entries(userIngredients[userIngredients.length - 1].nutritionData)) {
+      batch[name] = { name: data.label, data: 0, dri: 0, dataUnit: data.unit };
     }
 
     for (const nutrient of Object.keys(batch)) {
@@ -295,7 +292,7 @@ function getBatchTotalValues(userIngredients) {
  * @param {Array} headers - ["type", "dri", "(g)"]
  * @param {String} listId - id of the table
  */
-function generateTable(batch, headers = ["type", "dri", "(g)"], tableId = "") {
+function generateTable(batch, headers, tableId = "") {
   // FIXME So table has same rows
   // remove table if tableId already exists, so it'll be able to update table
   if (document.querySelector(`#${tableId}`)) {
@@ -321,9 +318,10 @@ function generateTable(batch, headers = ["type", "dri", "(g)"], tableId = "") {
     // Formats dailyRecommendedIntake and nutrientData so it only has 1 decimal
     item.dri = item.dri ? item.dri.toFixed(1) : 0;
     item.data = item.data ? item.data.toFixed(1) : 0;
+    item.dataUnit = item.dataUnit ? item.dataUnit : "";
 
     // add items to current table row
-    let row = [item.name, item.dri, item.data];
+    let row = [item.name, item.dri, item.data, item.dataUnit];
     let tr = document.createElement("tr");
 
     for (const item of row) {
@@ -379,7 +377,7 @@ function giveSavedDishEvent(savedDishEl, ingredients) {
 
 let recipe = [];
 let savedDishes = {};
-const tableHeader = ["Type", "DRI", "Unit"];
+const tableHeader = ["Type", "DRI", "Amount", "Unit"];
 const allSavedRecipes = document.querySelector("#saved-recipes > ul");
 const saveRecpie = document.querySelector("#save-recipe");
 const clearRecpie = document.querySelector("#clear-recipe");

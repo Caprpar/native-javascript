@@ -22,8 +22,13 @@ $light: #808081;
 $bg-dark: #d5d7d8;
 $dark: #0e1114;
 
+#page {
+  // border: solid;
+}
+
 #card-holder {
   display: flex;
+  align-items: start;
   flex-direction: column;
   height: 100vh;
   width: 100%;

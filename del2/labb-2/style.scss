@@ -73,6 +73,10 @@ nav {
 }
 
 main {
+  #main-container {
+    display: flex;
+    flex-direction: column;
+  }
   #saved-recipes {
     ul {
       list-style-type: none;
@@ -227,7 +231,6 @@ table {
   border: solid 0.3em $bg-dark;
   border-collapse: collapse;
   font-size: 0.9em;
-
   thead {
     th {
       padding: 0.5em 0.1em;
@@ -237,6 +240,9 @@ table {
     }
   }
   tbody {
+    td:first-child {
+      font-weight: bold;
+    }
     tr {
       td {
         padding: 0 0.5em;
@@ -248,10 +254,14 @@ table {
   }
 }
 
-#nutrition-facts {
-  width: 100%;
-  height: auto;
-  border: solid;
+#nutrient-facts {
+  h2 {
+    background-color: $bg-dark;
+    margin: 0;
+    padding: 0.5em 0.3em;
+    padding-bottom: 0;
+    border-radius: 0.5em 0.5em 0 0;
+  }
 }
 
 .remove {
@@ -295,5 +305,22 @@ table {
     cursor: pointer;
     background-color: $bg-danger;
     border-radius: 100px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #page {
+    width: min(85vw, 60em);
+  }
+  #nutrient-facts {
+    #nutrient-table {
+      width: 32em;
+    }
+  }
+  main {
+    #main-container {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 }
