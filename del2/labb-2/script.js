@@ -434,7 +434,16 @@ generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 /* Saves current ingredients to a complete dish and stores it in session storage*/
 saveDish.addEventListener("click", (event) => {
   console.log("Saved recpie");
-  if (dish.name) {
+  let dishExists = false;
+  for (const savedDish of Object.keys(savedDishes)) {
+    if (savedDish === dish.name) dishExists = true;
+  }
+
+  if (dishExists) {
+    console.log("Dish already exists");
+    displayWarning("war-dish-duplicate", true);
+  } else if (dish.name) {
+    displayWarning("war-dish-duplicate", false);
     savedDishes[dish.name] = { recipe: [], id: "", name: "" };
     savedDishes[dish.name].recipe = recipe;
     savedDishes[dish.name]["id"] = dish.name.toLowerCase().replaceAll(" ", "-");

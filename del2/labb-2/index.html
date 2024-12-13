@@ -43,14 +43,18 @@
             <form>
               <input type="text" name="" id="dish-name" placeholder="Dish name" autocomplete="off">
               <div id="user-input-field">
-                <input type="text" placeholder="Ingredient ex 'oats'" id="ingredient" autocomplete="off" class="grow">
-                <input type="number" step="1" autocomplete="off" placeholder="gram" min="0" id="weight">
+                <input type="text" placeholder="Ingredient ex 'oats'" id="ingredient" autocomplete="off" class="grow"
+                  required>
+                <input type="number" step="1" autocomplete="off" placeholder="gram" min="1" id="weight" required>
                 <button type="submit">Add</button>
               </div>
             </form>
           </section>
           <section class="warning hidden" id="war-invalid-ingredient">
-            <p><strong>Not a valid input, check your spelling and try again</strong></p>
+            <p><strong>Not a valid ingredient, check your spelling and try again</strong></p>
+          </section>
+          <section class="warning hidden" id="war-dish-duplicate">
+            <p><strong>Dish already exists, please change name or remove dish</strong></p>
           </section>
           <section id="ingredient-list">
             <h2 id="dish-header">Unnamed dish</h2>
