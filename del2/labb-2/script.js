@@ -352,8 +352,10 @@ function getDishListFromLocalStorage(location = "savedDishes") {
 function giveRemoveEvent(removeEl, ingredientName, ingredientWeight) {
   removeEl.addEventListener("click", (event) => {
     for (const [index, ingredient] of recipe.entries()) {
-      if (ingredient.name === ingredientName && ingredientWeight === ingredient.weight) recipe.splice(index, 1);
-      break;
+      if (ingredient.name === ingredientName && ingredientWeight === ingredient.weight) {
+        recipe.splice(index, 1);
+        break;
+      }
     }
     console.log(recipe);
     event.target.parentElement.remove();
@@ -369,6 +371,7 @@ function giveSavedDishEvent(savedDishEl, ingredients) {
     for (const ingredient of ingredients.recipe) {
       recipe.push(ingredient);
       addIngredientToList(ingredient);
+      // FIXME So remove button works
     }
     generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
   });
