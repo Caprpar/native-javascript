@@ -86,18 +86,15 @@ main #main-container {
   display: flex;
   flex-direction: column;
 }
+main #greeting h1 {
+  font-family: "varela round";
+  font-family: "Goudy Bookletter 1911";
+  width: 100%;
+  margin: 0;
+}
 main #saved-recipes #saved-recipes-header-container {
   display: flex;
   align-items: center;
-}
-main #saved-recipes #edit {
-  font-size: small;
-  background-color: #d5d7d8;
-  padding: 0.5em;
-  border-radius: 1000px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
 }
 main #saved-recipes .remove-dish {
   margin-left: 0.5em;
@@ -109,18 +106,21 @@ main #saved-recipes .remove-dish {
   width: 1em;
   height: 1em;
 }
-main #saved-recipes h1 {
+main #saved-recipes h2 {
   font-size: xx-large;
   margin-right: 1em;
+  font-family: "Goudy Bookletter 1911";
+  padding: 0;
+  margin: 0;
 }
 main #saved-recipes ul {
   list-style-type: none;
-  padding: 0;
-  padding-bottom: 1em;
+  padding: 0.5em 0 1em 0;
+  margin: 0;
   display: flex;
   align-items: start;
   width: 100%;
-  border-bottom: dashed #d5d7d8;
+  border-top: dashed #d5d7d8;
   flex-wrap: wrap;
 }
 main #saved-recipes ul li:hover {
@@ -340,6 +340,7 @@ table tbody tr td {
 
 footer {
   display: flex;
+  justify-content: center;
   padding: 1em;
   color: #fefefe;
   width: 100%;
@@ -358,6 +359,10 @@ footer #edamam-badge {
   }
   .remove-dish {
     display: block;
+  }
+  h1 {
+    font-size: xx-large;
+    padding: 2em 0 1em 0;
   }
 }
 @media (min-width: 1024px) {
@@ -389,6 +394,10 @@ footer #edamam-badge {
   }
   #page {
     width: min(85vw, 60em);
+  }
+  #greeting h1 {
+    font-size: 3em;
+    padding: 2em 0 1em 0;
   }
   #nutrient-facts #nutrient-table {
     width: 32em;

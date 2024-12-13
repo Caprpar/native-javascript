@@ -130,20 +130,20 @@ main {
     flex-direction: column;
   }
 
+  #greeting {
+    h1 {
+      // border: solid;
+      font-family: "varela round";
+      font-family: "Goudy Bookletter 1911";
+      width: 100%;
+      margin: 0;
+    }
+  }
+
   #saved-recipes {
     #saved-recipes-header-container {
       display: flex;
-      // border: solid black;
       align-items: center;
-    }
-    #edit {
-      font-size: small;
-      background-color: $bg-dark;
-      padding: 0.5em;
-      border-radius: 1000px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
     }
 
     .remove-dish {
@@ -156,18 +156,21 @@ main {
       width: 1em;
       height: 1em;
     }
-    h1 {
+    h2 {
       font-size: xx-large;
       margin-right: 1em;
+      font-family: "Goudy Bookletter 1911";
+      padding: 0;
+      margin: 0;
     }
     ul {
       list-style-type: none;
-      padding: 0;
-      padding-bottom: 1em;
+      padding: 0.5em 0 1em 0;
+      margin: 0;
       display: flex;
       align-items: start;
       width: 100%;
-      border-bottom: dashed $bg-dark;
+      border-top: dashed $bg-dark;
       // margin: 1em;
       flex-wrap: wrap;
       li:hover {
@@ -395,6 +398,7 @@ table {
 
 footer {
   display: flex;
+  justify-content: center;
   padding: 1em;
   color: $bg-light;
   width: 100%;
@@ -413,6 +417,10 @@ footer {
   }
   .remove-dish {
     display: block;
+  }
+  h1 {
+    font-size: xx-large;
+    padding: 2em 0 1em 0;
   }
 }
 
@@ -448,6 +456,14 @@ footer {
   #page {
     width: min(85vw, 60em);
   }
+
+  #greeting {
+    h1 {
+      font-size: 3em;
+      padding: 2em 0 1em 0;
+    }
+  }
+
   #nutrient-facts {
     #nutrient-table {
       width: 32em;

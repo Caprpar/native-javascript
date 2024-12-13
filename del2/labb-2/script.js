@@ -364,6 +364,7 @@ function giveRemoveEvent(removeEl, ingredientName, ingredientWeight) {
 /* When a saved dish is pressed, insert saved ingredients to #ingredient-list */
 function giveSavedDishEvent(savedDishEl, ingredients) {
   savedDishEl.addEventListener("click", (event) => {
+    // FIXME som page dont freeze after saving a dish and then try to import to itself
     const currentDishId = savedDishEl.id;
     for (const ingredient of ingredients.recipe) {
       recipe.push(ingredient);
