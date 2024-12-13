@@ -3,10 +3,17 @@
   color: #0e1114;
 }
 
+html,
 body {
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   background-color: #fefefe;
   display: flex;
@@ -93,8 +100,14 @@ main #saved-recipes #edit {
   cursor: pointer;
 }
 main #saved-recipes .remove-dish {
-  color: red;
+  margin-left: 0.5em;
+  background-repeat: no-repeat;
   cursor: pointer;
+  background-image: url(icons/x-circle.svg);
+  background-size: contain;
+  color: red;
+  width: 1em;
+  height: 1em;
 }
 main #saved-recipes h1 {
   font-size: xx-large;
@@ -112,10 +125,13 @@ main #saved-recipes ul {
 }
 main #saved-recipes ul li:hover {
   cursor: pointer;
-  background-color: #004280;
-  color: #c9e4fd;
+}
+main #saved-recipes ul li:hover :last-child {
+  display: block;
 }
 main #saved-recipes ul li {
+  display: flex;
+  align-items: center;
   margin: 0.2em 0.1em;
   border: rgba(0, 0, 0, 0) 1px solid;
   background-color: #c9e4fd;
@@ -340,8 +356,14 @@ footer #edamam-badge {
     background-color: #fbd5d9;
     border-radius: 100px;
   }
+  .remove-dish {
+    display: block;
+  }
 }
 @media (min-width: 1024px) {
+  .remove-dish {
+    display: none;
+  }
   nav {
     width: min(85vw, 60em);
     background-color: #fefefe;

@@ -43,11 +43,17 @@ $dark: #0e1114;
   font-size: 1em;
 }
 
+html,
 body {
+  overflow-x: hidden;
+}
+body {
+  position: relative;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   // height: fit-content;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   background-color: $bg-light;
   display: flex;
@@ -139,9 +145,16 @@ main {
       font-size: 14px;
       cursor: pointer;
     }
+
     .remove-dish {
-      color: red;
+      margin-left: 0.5em;
+      background-repeat: no-repeat;
       cursor: pointer;
+      background-image: url(icons/x-circle.svg);
+      background-size: contain;
+      color: red;
+      width: 1em;
+      height: 1em;
     }
     h1 {
       font-size: xx-large;
@@ -159,10 +172,13 @@ main {
       flex-wrap: wrap;
       li:hover {
         cursor: pointer;
-        background-color: $primary;
-        color: $bg-primary;
+        :last-child {
+          display: block;
+        }
       }
       li {
+        display: flex;
+        align-items: center;
         margin: 0.2em 0.1em;
         border: rgba(0, 0, 0, 0) 1px solid;
         background-color: $bg-primary;
@@ -395,9 +411,15 @@ footer {
     background-color: $bg-danger;
     border-radius: 100px;
   }
+  .remove-dish {
+    display: block;
+  }
 }
 
 @media (min-width: 1024px) {
+  .remove-dish {
+    display: none;
+  }
   nav {
     width: min(85vw, 60em);
     background-color: $bg-light;

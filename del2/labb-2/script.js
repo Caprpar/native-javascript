@@ -101,7 +101,7 @@ function displayUserDishes(savedDishes) {
   for (const [name, ingredients] of Object.entries(savedDishes)) {
     const dishEl = addElementToParent("li", name, dishListEl, "", savedDishes[name].id);
 
-    const removeBTN = addElementToParent("div", "x", dishListEl, "remove-dish hidden");
+    const removeBTN = addElementToParent("div", "", dishEl, "remove-dish");
     giveSavedDishEvent(dishEl, ingredients);
     giveDishRemoveBTNEvent(removeBTN, name);
   }
@@ -365,7 +365,6 @@ function giveRemoveEvent(removeEl, ingredientName, ingredientWeight) {
 function giveSavedDishEvent(savedDishEl, ingredients) {
   savedDishEl.addEventListener("click", (event) => {
     const currentDishId = savedDishEl.id;
-
     for (const ingredient of ingredients.recipe) {
       recipe.push(ingredient);
       addIngredientToList(ingredient);
@@ -403,9 +402,6 @@ let dish = {
   placeholder: "Unnamed dish",
 };
 
-/* Disables save button if dishname input is empty */
-if (!dish.name) saveDish.disabled = true;
-
 /* When content is loaded, retrive users saved dishes (if any) and display them
 in saved dishes*/
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -422,10 +418,8 @@ dishNameEl.addEventListener("keyup", (event) => {
   dish.name = dish.name.charAt(0).toUpperCase() + dish.name.toLowerCase().slice(1);
   if (dishNameEl.value) {
     dishHeader.innerText = dish.name;
-    saveDish.disabled = false;
   } else {
     dishHeader.innerText = dish.placeholder;
-    saveDish.disabled = true;
   }
 });
 
@@ -433,17 +427,22 @@ generateTable(getBatchTotalValues(recipe), tableHeader, "nutrient-table");
 
 /* Saves current ingredients to a complete dish and stores it in session storage*/
 saveDish.addEventListener("click", (event) => {
-  console.log("Saved recpie");
+  let emptyIngredientList = document.querySelector("#ingredient-list > ul").childElementCount === 0 ? true : false;
+  let emptyInput = dishNameEl.value ? false : true;
   let dishExists = false;
   for (const savedDish of Object.keys(savedDishes)) {
     if (savedDish === dish.name) dishExists = true;
   }
-
-  if (dishExists) {
-    console.log("Dish already exists");
+  if (emptyIngredientList) {
+    displayWarning("war-empty-ingredient-list", true);
+  } else if (dishExists) {
     displayWarning("war-dish-duplicate", true);
+  } else if (emptyInput) {
+    displayWarning("war-unnamed-dish", true);
   } else if (dish.name) {
+    displayWarning("war-empty-ingredient-list", false);
     displayWarning("war-dish-duplicate", false);
+    displayWarning("war-unnamed-dish", false);
     savedDishes[dish.name] = { recipe: [], id: "", name: "" };
     savedDishes[dish.name].recipe = recipe;
     savedDishes[dish.name]["id"] = dish.name.toLowerCase().replaceAll(" ", "-");
@@ -462,7 +461,6 @@ clearRecpie.addEventListener("click", (event) => {
   clearIngredientList();
   dishHeader.innerText = dish.placeholder;
   dishNameEl.value = "";
-  saveDish.disabled = true;
   document.querySelector("#ingredient").value = "";
   document.querySelector("#weight").value = "";
 });
@@ -502,22 +500,4 @@ form.addEventListener("submit", (event) => {
     });
 
   event.preventDefault();
-});
-
-document.querySelector("#edit").addEventListener("click", (event) => {
-  let editIsHidden = false;
-  let dishCross = document.querySelectorAll(".remove-dish");
-  if (editIsHidden) {
-    editIsHidden = false;
-    for (const cross of dishCross) {
-      cross.classList.add("hidden");
-    }
-  } else {
-    editIsHidden = true;
-    for (const cross of dishCross) {
-      cross.classList.remove("hidden");
-    }
-  }
-  console.log("redigera");
-  // TODO visa remove kryss vid respektive sparad recept
 });

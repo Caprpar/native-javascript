@@ -31,10 +31,8 @@
       <section id="saved-recipes">
         <div id="saved-recipes-header-container">
           <h1>Saved recipes</h1>
-          <span id="edit">REMOVE</span>
         </div>
         <ul>
-
         </ul>
       </section>
       <div id="main-container">
@@ -50,11 +48,17 @@
               </div>
             </form>
           </section>
+          <section class="warning hidden" id="war-empty-ingredient-list">
+            <p><strong>Please add ingredient before saving</strong></p>
+          </section>
           <section class="warning hidden" id="war-invalid-ingredient">
             <p><strong>Not a valid ingredient, check your spelling and try again</strong></p>
           </section>
           <section class="warning hidden" id="war-dish-duplicate">
             <p><strong>Dish already exists, please change name or remove dish</strong></p>
+          </section>
+          <section class="warning hidden" id="war-unnamed-dish">
+            <p><strong>Please name your dish before saving it</strong></p>
           </section>
           <section id="ingredient-list">
             <h2 id="dish-header">Unnamed dish</h2>
