@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cities</title>
+  <style>
+    body {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+    }
+
+    #page {
+      padding-top: 4em;
+      display: flex;
+      width: 90em;
+
+    }
+
+
+    fieldset {
+      display: flex;
+      flex-direction: column;
+      width: 20em;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      background-color: #eee;
+      border: solid;
+      width: 100%;
+      max-width: 50em;
+      max-height: 30em;
+      margin-left: 2em;
+      overflow-y: scroll;
+
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+
+    }
+
+    ul>li:hover {
+      background-color: #ccc;
+    }
+
+    ul>li {
+      list-style-type: none;
+      border: solid 1px;
+      border-radius: 1em;
+      background-color: #fff;
+      width: fit-content;
+      margin: .5em;
+      padding: 1em;
+      transition: 109ms;
+    }
+
+    .button-box {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    legend {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    #target-city>p {
+      margin: 0;
+      margin-bottom: .5em;
+      font-size: 1em;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page">
+
+    <main>
+
+      <form id="add-city-to-api">
+        <fieldset>
+          <legend>Lägg till stad</legend>
+          <label for="">Lägg till stad</label>
+          <input type="text" name="" id="city-name-input" placeholder="stad">
+          <label for="">Antal invånare</label>
+          <input type="number" name="" id="city-population-input" placeholder="befolkning">
+          <input type="button" name="" id="add-city" value="Lägg till">
+        </fieldset>
+      </form>
+
+      <form id="choosen-city">
+        <fieldset>
+          <legend>Ändra/Ta bort stad</legend>
+          <section id="target-city">
+            <p id="city-name-targeted">---</p>
+            <p id="city-population-targeted">---</p>
+          </section>
+          <label>Ändra namn</label>
+          <input type="text" name="" id="new-name" placeholder="nytt namn">
+          <label for="">Ändra invånare</label>
+          <input type="number" name="" id="new-population" placeholder="befolkning">
+          <div class="button-box">
+            <input type="button" name="" id="change" value="Ändra">
+            <input type="button" name="" id="remove" value="Ta bort">
+          </div>
+        </fieldset>
+      </form>
+    </main>
+
+    <aside>
+      <h2>Klicka på den stad du vill påverka</h2>
+      <ul>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
